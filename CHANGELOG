@@ -1,0 +1,50 @@
+v 0.05 (04/04/2011)
+- New items : weapons, armors parts
+- Items have a quality : normal, magic (1-2 powers), rare (3-4 powers) and epic (5-6 powers)
+- Few powers availables for items : +elemental damage, + HP/SP/MP
+- Added chests (A to open) that drop higher quality loot
+- Added a Trash in the inventory menu
+- Added / modfied new 3D objects : trees and training stuff
+- Modified a little bit some monster stats
+
+v 0.04 (03/22/2011)
+- Added a new monster : spider (thanks to Wciow and John.d.h).
+- New model for the hero : a goth woman (thanks to TiZiana). The quality of animations is quite poor: this is my first attempt at animating a 3D model :P. I'll soon try to improve her animations, and i'll upload the result on OGA.
+- Started to work on the inventory. You can now switch weapon with the ones you dropped and drag potions on the shortcut bar.
+- Monsters can now drop items. Added new items (katana, staff, mace, HP, SP and MP potions). Potions stack and give 10 units back.
+- Reduced the map size: the previous maps were a little too big, causing overflows in vertices buffers.
+- Improved transparency: trees should have a better look.
+- Started to use jquery : skills and items should now be draggable with all recent browsers.
+- The description of skills and items is now shown when the mouse is over the icon.
+- Improved the pause a little bit.
+- Now a 'miss' appear when dodging attacks.
+
+v 0.03 (03/05/2011)
+- Removed the map file, now the map is randomly generated with square & diamond algorithm and is a little bit larger.
+- Switched matrix library to glUtils (link is in the credit page) which is a lot faster.
+- Added an area concept : the map is composed of various areas linked together by paths. Villages need some improvement thought.
+- Added a starting point, with a shrine, when you die you will revive there. Monsters level is now given by the level of an area, which increase with the distance in the graph of the starting point.
+- Added cemetery objects, this still need some improvements to make nice graveyards. Added skeleton enemies.
+- The drawback of these updates : loading time has increase (between 5 and 10 sec). I'll add a loading screen soon.
+
+v 0.02 (02/27/2011)
+- Removed the 'Q' shortcut for fireball.
+- Skills have now a level requirement.
+- Added a skill panel : you can access it by clicking on an aptitude in the aptitude panel ('L' shortcut). It then will propose all skills linked to this aptitude that you can use according to your aptitude levels. You can then drag & drop skills on the shortcut bar.
+- Added a dozen of skills : melee (precise attack, power attack, burning strike, thunder strike), fire (flare, inferno, flame nova), air (lightning bolt, lightning, thunder, nova).
+
+v 0.01 (02/15/2011)
+- You can now die and monsters disapear when dead. Added some randomness in monster level (increases with the distance to (0,0))
+- Added 2 panels (shortcuts 'P' and 'L') : settings (only view radius for the moment) and aptitudes.
+- You can now level up some aptitudes (constitution, intelligence, stamina, dexterity, melee, cast fire, sword).
+- When hit you enter in recovery mode, which cancel your current action.
+- Added a particule system. Particle effects are written in json files which should allow quick particle definition
+- Added the fireball skill ('Q' shortcut) :)
+
+v 0.00 (01/25/2011)
+- Added sky, fog and a grid system for optimization, there is now 2000 objects on the map and the demo should run on lower hardware.
+- Added static models (chest, house, shrine, trees). Added monsters : minotaur and antlion (special thanks to pfunked : you made awesome stuff).
+- Linked a sword to the skeleton model : you can now attack monsters.
+- Added collision detection
+- Monsters have an health disk bellow them and can now die.
+- Improved drawing (objects in the view radius but in the back are not drawn anymore)
