@@ -191,10 +191,10 @@ World.prototype.generateTerrain= function(numRec){
 			graph[i].areaLevel = Math.ceil(10*rand());
 	debug(explored.length +'nodes visited');
 	this.map.mesh = createMap(this.map.w,this.map.h,data,this.tileSize,this.paths);
-	var grass = initTexture('../data/text/grassC.jpg');
-	var rock = initTexture('../data/text/rockC.jpg');
-	var snow = initTexture('../data/text/snowC.jpg')
-	var dirt = initTexture('../data/text/dirtC.jpg')
+	var grass = initTexture('data/text/grassC.jpg');
+	var rock = initTexture('data/text/rockC.jpg');
+	var snow = initTexture('data/text/snowC.jpg')
+	var dirt = initTexture('data/text/dirtC.jpg')
 	this.map.mesh.materials[0].textures.push(grass);
 	this.map.mesh.materials[0].textures.push(rock);
 	this.map.mesh.materials[0].textures.push(snow);

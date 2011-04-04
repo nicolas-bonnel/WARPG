@@ -215,7 +215,7 @@ function initTexture (fileName) {
 
 function loadMd5Mesh (modelName){
 	var reqMesh = new XMLHttpRequest();
-	reqMesh.open('GET', '../data/md5/'+modelName+'.mesh', true);
+	reqMesh.open('GET', 'data/md5/'+modelName+'.mesh', true);
 	reqMesh.onreadystatechange = function() { 
 		if(reqMesh.readyState == 4)
 			if (reqMesh.responseText.length>0){
@@ -227,7 +227,7 @@ function loadMd5Mesh (modelName){
 
 function loadMd5Anim (modelName){
 	var reqAnim = new XMLHttpRequest();
-	reqAnim.open('GET', '../data/md5/'+modelName+'.anim', true);
+	reqAnim.open('GET', 'data/md5/'+modelName+'.anim', true);
 	reqAnim.onreadystatechange = function() { 
 		if(reqAnim.readyState == 4)
 			if (reqAnim.responseText.length>0){
@@ -239,7 +239,7 @@ function loadMd5Anim (modelName){
 
 function loadObj (modelName,recenter){
 	var reqMesh = new XMLHttpRequest();
-	reqMesh.open('GET', '../data/obj/'+modelName+'/'+modelName+'.obj', true);
+	reqMesh.open('GET', 'data/obj/'+modelName+'/'+modelName+'.obj', true);
 	reqMesh.onreadystatechange = function() { 
 		if(reqMesh.readyState == 4)
 			if (reqMesh.responseText.length>0){

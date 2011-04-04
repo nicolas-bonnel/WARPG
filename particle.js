@@ -23,7 +23,7 @@ function NumberParticule(num){
 	this.mesh = new Mesh('particle');
 	this.mesh.materials.push(new Object());
 	this.mesh.materials[0].textures = [];
-	this.mesh.materials[0].textures.push(initTexture('../data/text/particle/numbers/'+num+'.png'));
+	this.mesh.materials[0].textures.push(initTexture('data/text/particle/numbers/'+num+'.png'));
 	this.mesh.vertices.push(0.0);
 	this.mesh.vertices.push(0.0);
 	this.mesh.vertices.push(3.0);
@@ -60,7 +60,7 @@ function Particles(jsonParts){
 	this.mesh = new Mesh('particle');
 	this.mesh.materials.push(new Object());
 	this.mesh.materials[0].textures = [];
-	this.mesh.materials[0].textures.push(initTexture('../data/text/particle/'+jsonParts.img));
+	this.mesh.materials[0].textures.push(initTexture('data/text/particle/'+jsonParts.img));
 	var numParts = jsonParts.numParts;
 	if (jsonParts.type && jsonParts.type =='tree')
 		recPart(eval(jsonParts.startX),eval(jsonParts.startY),eval(jsonParts.startZ),this.mesh,numParts,jsonParts);

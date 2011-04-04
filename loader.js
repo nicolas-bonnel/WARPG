@@ -65,7 +65,7 @@ function parseMesh(data){
 		mesh.materials[k].faces = [];
 		mesh.materials[k].textures = [];
 		if (textName.length>3)
-			mesh.materials[k].textures.push(initTexture('../data/text/'+textName));
+			mesh.materials[k].textures.push(initTexture('data/text/'+textName));
 
 
 		mesh.weight1 = [];
@@ -475,10 +475,10 @@ function createSky(){
 		sky.materials[i].textures = [];
 		sky.materials[i].faces = [4*i+0,4*i+1,4*i+2,4*i+1,4*i+2,4*i+3];
 	}
-	sky.materials[0].textures.push(initTexture('../data/text/clouds1_north.jpg'));
-	sky.materials[1].textures.push(initTexture('../data/text/clouds1_south.jpg'));
-	sky.materials[2].textures.push(initTexture('../data/text/clouds1_east.jpg'));
-	sky.materials[3].textures.push(initTexture('../data/text/clouds1_west.jpg'));
+	sky.materials[0].textures.push(initTexture('data/text/clouds1_north.jpg'));
+	sky.materials[1].textures.push(initTexture('data/text/clouds1_south.jpg'));
+	sky.materials[2].textures.push(initTexture('data/text/clouds1_east.jpg'));
+	sky.materials[3].textures.push(initTexture('data/text/clouds1_west.jpg'));
 	var s = 50.0;
 	sky.vertices = [s,s,s,  -s, s,s,  s,s,-s, -s,s,-s, // north
 			s,-s,s,  -s, -s,s,  s,-s,-s, -s,-s,-s, // south
@@ -503,7 +503,7 @@ function createHealthCircle(){
 	var hc = new Mesh('health');
 	hc.materials.push(new Object());
 	hc.materials[0].textures = [];
-	hc.materials[0].textures.push(initTexture('../data/text/circleHealth.png'));
+	hc.materials[0].textures.push(initTexture('data/text/circleHealth.png'));
 	hc.vertices = [-1.0,-1.0,0.1,-1.0,1.0,0.1,1.0,-1.0,0.1,1.0,1.0,0.1];
 	hc.textures = [0.0,0.0,0.0,1.0,1.0,0.0,1.0,1.0];
 	hc.normals = [0.0,0.0,-1.0,0.0,0.0,-1.0,0.0,0.0,-1.0,0.0,0.0,-1.0];

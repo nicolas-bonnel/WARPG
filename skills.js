@@ -95,7 +95,7 @@ function aptitudeButton(aptitude){
 				level += world.player[skills[sk].aptitudes[i]].level;
 			}
 		if (skills[sk].icon && hasApti && level >= skills[sk].level){
-			var button = $('<div></div>').attr({'class':'skill','skill':sk,'id':skills[sk].name,'style':'width:32;height:32;background-image:url(../data/icons/'+skills[sk].icon+')'}).draggable({revert:'invalid',appendTo: 'body',helper: 'clone',start:function(){src = $(this).parent();}});
+			var button = $('<div></div>').attr({'class':'skill','skill':sk,'id':skills[sk].name,'style':'width:32;height:32;background-image:url(data/icons/'+skills[sk].icon+')'}).draggable({revert:'invalid',appendTo: 'body',helper: 'clone',start:function(){src = $(this).parent();}});
 			button.mouseover(function() {
 			    $('#canvas3D').append(skillDescription($(this).attr('skill')));
 			  }).mouseout(function(){

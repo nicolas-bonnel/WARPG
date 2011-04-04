@@ -75,7 +75,7 @@ function Item(jsonItem,quality,itemLevel){
 }
 
 function getIcon(item){
-	var ret = $('<div></div>').attr({'class':'item','id':item.id,'name':item.name,'style':'width:32;height:32;background-image:url(../data/icons/'+item.icon+')'}).draggable({revert:'invalid',appendTo: 'body',helper: 'clone',start:function(){src = $(this).parent();}});
+	var ret = $('<div></div>').attr({'class':'item','id':item.id,'name':item.name,'style':'width:32;height:32;background-image:url(data/icons/'+item.icon+')'}).draggable({revert:'invalid',appendTo: 'body',helper: 'clone',start:function(){src = $(this).parent();}});
 	ret.mouseover(function() {
 	    $('#canvas3D').append(itemDescription(world.player.inventory[$(this).attr('id')]));
 	  }).mouseout(function(){
