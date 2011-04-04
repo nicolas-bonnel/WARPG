@@ -1,0 +1,13 @@
+# Blender MTL File: 'trainingtarget.blend'
+# Material Count: 1
+newmtl Material.001_traingingtarget-tex.t
+Ns 37.254902
+Ka 0.000000 0.000000 0.000000
+Kd 0.106291 0.075699 0.033958
+Ks 0.038189 0.033277 0.022669
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd traingingtarget-tex.jpg
+
+

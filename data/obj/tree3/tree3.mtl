@@ -1,0 +1,24 @@
+# Blender MTL File: 'trees_0.blend'
+# Material Count: 2
+newmtl Material_trees_leaves_004_col
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 0.000000
+illum 1
+map_Kd trees_leaves_004_col.png
+
+
+newmtl trees_bark_001_trees_bark_001_col
+Ns 76.470588
+Ka 0.000000 0.000000 0.000000
+Kd 0.604899 0.467153 0.214738
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd trees_bark_001_col.jpg
+
+

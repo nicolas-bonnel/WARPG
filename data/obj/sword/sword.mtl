@@ -1,0 +1,24 @@
+# Blender3D MTL File: sword.blend
+# Material Count: 2
+newmtl Leather_sword.jpg
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.077682 0.077682 0.077682
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd sword.jpg
+
+
+newmtl Silver_sword.jpg
+Ns 27.450980
+Ka 0.000000 0.000000 0.000000
+Kd 0.773666 0.773666 0.773666
+Ks 0.800000 0.800000 0.800000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd sword.jpg
+
+

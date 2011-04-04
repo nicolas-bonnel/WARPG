@@ -1,0 +1,24 @@
+# Blender MTL File: 'weapon_set_kingdom.blend'
+# Material Count: 2
+newmtl Leather.001_untitled._steel-hammer.jpg
+Ns 90.196078
+Ka 0.000000 0.000000 0.000000
+Kd 0.049717 0.049717 0.049717
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd steel-hammer.jpg
+
+
+newmtl Silver.001_untitled.0_steel-hammer.jpg
+Ns 21.568627
+Ka 0.000000 0.000000 0.000000
+Kd 0.495146 0.495146 0.495146
+Ks 0.800000 0.800000 0.800000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd steel-hammer.jpg
+
+

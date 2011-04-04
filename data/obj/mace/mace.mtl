@@ -1,0 +1,46 @@
+# Blender MTL File: 'mace.blend'
+# Material Count: 4
+newmtl Handle_untitled
+Ns 23.529412
+Ka 0.000000 0.000000 0.000000
+Kd 0.363054 0.232616 0.094506
+Ks 0.152910 0.152910 0.152910
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd mace.jpg
+
+
+newmtl Head_untitled
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.679193 0.669395 0.695683
+Ks 0.297531 0.297531 0.297531
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd mace.jpg
+
+
+newmtl Neck_untitled
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.218671 0.218671 0.228469
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd mace.jpg
+
+
+newmtl Trim_untitled
+Ns 50.980392
+Ka 0.000000 0.000000 0.000000
+Kd 0.737984 0.424436 0.000000
+Ks 1.280952 1.280952 1.280952
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd mace.jpg
+
+

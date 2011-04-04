@@ -1,0 +1,24 @@
+# Blender MTL File: 'weapon_set_kingdom.blend'
+# Material Count: 2
+newmtl wood1_untitled.001_wo_wooden-axe.jpg
+Ns 33.333333
+Ka 0.000000 0.000000 0.000000
+Kd 0.068590 0.043534 0.026432
+Ks 0.088875 0.084434 0.067910
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd wooden-axe.jpg
+
+
+newmtl wood2_untitled.001_wo_wooden-axe.jpg
+Ns 21.568627
+Ka 0.000000 0.000000 0.000000
+Kd 0.076419 0.053418 0.028889
+Ks 0.076336 0.066317 0.041760
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd wooden-axe.jpg
+
+
