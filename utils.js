@@ -243,7 +243,7 @@ function loadObj (modelName,recenter){
 	reqMesh.onreadystatechange = function() { 
 		if(reqMesh.readyState == 4)
 			if (reqMesh.responseText.length>0){
-				models[modelName].mesh = parseObj(reqMesh.responseText, '../data/obj/'+modelName+'/',recenter);
+				models[modelName].mesh = parseObj(reqMesh.responseText, 'data/obj/'+modelName+'/',recenter);
 			}
 	}
 	reqMesh.send(null);

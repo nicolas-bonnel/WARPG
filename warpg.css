@@ -2,7 +2,7 @@ html, body{
 font-size:12px;
 background-color: black;
 color:white;
-background-image:url('../data/text/darkC.jpg');
+background-image:url('data/text/darkC.jpg');
 }
 
 a:link{
@@ -63,7 +63,7 @@ margin-right:0px;
 #shortcutTable td{
 padding:0px;
 text-align:center;
-background-image: url(../data/text/skillSlot.png);
+background-image: url(data/text/skillSlot.png);
 width:40px;
 height:40px;
 }
@@ -124,7 +124,7 @@ left: 3px;
 padding:0px;
 margin-top:10px;
 text-align:center;
-background-image: url(../data/text/skillSlot.png);
+background-image: url(data/text/skillSlot.png);
 width:40px;
 height:40px;
 }
@@ -146,7 +146,7 @@ left: 220px;
 padding:0px;
 margin-top:10px;
 text-align:center;
-background-image: url(../data/text/skillSlot.png);
+background-image: url(data/text/skillSlot.png);
 width:40px;
 height:40px;
 }
@@ -195,7 +195,7 @@ left: 320px;
 #inventoryTab td{
 padding:0px;
 text-align:center;
-background-image: url(../data/text/skillSlot.png);
+background-image: url(data/text/skillSlot.png);
 width:40px;
 height:40px;
 }
@@ -292,7 +292,7 @@ left: 5px;
 background-color: rgba(0,0,0,0.5);
 border-radius: 3px;
 padding: 0px;
-background-image:url('../data/text/emptyBar.png');
+background-image:url('data/text/emptyBar.png');
 background-size:100%;
 width:150;
 height:60;
