@@ -1,0 +1,13 @@
+# Blender3D MTL File: rhan_shrine.blend
+# Material Count: 1
+newmtl shrine_shrine_texture.png
+Ns 23.529412
+Ka 0.000000 0.000000 0.000000
+Kd 0.099535 0.099535 0.099535
+Ks 0.022093 0.010511 0.004475
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd shrine_texture_scaled.jpg
+
+

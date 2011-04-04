@@ -1,0 +1,13 @@
+# Blender MTL File: 'trainingdummy_0.blend'
+# Material Count: 1
+newmtl Material.000_leatherdummy2.jpg
+Ns 15.686275
+Ka 0.000000 0.000000 0.000000
+Kd 0.053460 0.036960 0.020570
+Ks 0.022497 0.017011 0.010349
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd leatherdummy2.jpg
+
+

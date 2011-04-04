@@ -1,0 +1,13 @@
+# Blender MTL File: 'trainingpole_0.blend'
+# Material Count: 1
+newmtl Material.003_untitled
+Ns 194.117647
+Ka 0.000000 0.000000 0.000000
+Kd 0.156791 0.094958 0.053843
+Ks 0.275596 0.214410 0.120520
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd trainingpole-tex.jpg
+
+
