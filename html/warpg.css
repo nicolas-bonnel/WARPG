@@ -1,0 +1,327 @@
+html, body{  
+font-size:12px;
+background-color: black;
+color:white;
+background-image:url('data/text/darkC.jpg');
+}
+
+a:link{
+color:#8080F0;
+} 
+
+a:active{
+color:#8080F0;
+} 
+
+a:hover {
+color : #80F080;
+}
+
+a:visited {
+color : #F08080;
+}
+
+
+#canvas3D{
+position: relative;
+top: 10px;
+left: 10px;
+width:800;
+height:600;
+}
+
+
+#frameRate {  
+display:block;
+position: absolute;
+top: 10px;
+left: 725px;
+width:60px;
+z-index: 2;
+color: white;
+background-color: rgba(0,0,0,0.5);
+border-radius: 10px;
+padding: 5px;
+} 
+
+#shortcutTab{
+display:block;
+position: absolute;
+top: 520px;
+left: 240px;
+width:320px;
+height:80px;
+} 
+
+#shortcutTable{
+border-width:0px;
+border-spacing:0px;
+margin-left:0px;
+margin-right:0px;
+}
+
+#shortcutTable td{
+padding:0px;
+text-align:center;
+background-image: url(data/text/skillSlot.png);
+width:40px;
+height:40px;
+}
+
+#shortcutTable td div{
+position:relative;
+left:4px;
+}
+
+#settingsTab{
+display:block;
+position: absolute;
+top: 60px;
+left: 180px;
+width:250px;
+background-color: rgba(0,0,0,0.5);
+border-radius: 10px;
+padding: 3px;
+}
+
+#questsTab{
+display:block;
+position: absolute;
+top: 80px;
+left: 100px;
+width:300px;
+background-color: rgba(0,0,0,0.5);
+border-radius: 10px;
+padding: 3px;
+}
+
+#inventoryTab{
+display:block;
+position: absolute;
+top: 100px;
+left: 100px;
+width:600px;
+height:320px;
+background-color: rgba(0,0,0,0.5);
+border-radius: 10px;
+padding: 3px;
+}
+
+
+#inventoryTable td div{
+position:relative;
+left:4px;
+}
+
+#leftgear{
+display:block;
+position: absolute;
+top: 3px;
+left: 3px;
+}
+
+#leftgear div{
+padding:0px;
+margin-top:10px;
+text-align:center;
+background-image: url(data/text/skillSlot.png);
+width:40px;
+height:40px;
+}
+
+#leftgear div div{
+position:relative;
+left:4px;
+top:4px;
+}
+
+#rightgear{
+display:block;
+position: absolute;
+top: 3px;
+left: 220px;
+}
+
+#rightgear div{
+padding:0px;
+margin-top:10px;
+text-align:center;
+background-image: url(data/text/skillSlot.png);
+width:40px;
+height:40px;
+}
+
+#rightgear div div{
+position:relative;
+left:4px;
+top:4px;
+}
+
+#inventoryTab img{
+display:block;
+position: absolute;
+top: 0px;
+left: 40px;
+}
+
+#inventoryTab img{
+display:block;
+position: absolute;
+top: 0px;
+left: 45px;
+}
+
+#inventoryTab table{
+border-width:0px;
+border-spacing:0px;
+margin-left:0px;
+margin-right:0px;
+}
+
+#inventoryTab input{
+display:block;
+position: absolute;
+top: -20px;
+left: 0px;
+}
+
+#inventoryTable{
+display:block;
+position: absolute;
+top: 43px;
+left: 320px;
+}
+
+#inventoryTab td{
+padding:0px;
+text-align:center;
+background-image: url(data/text/skillSlot.png);
+width:40px;
+height:40px;
+}
+
+#inventoryTitle{
+position: absolute;
+left: 330px;
+font-size:24px;
+color:#FFFFAA
+}
+
+#trash{
+position: absolute;
+left: 550px;
+}
+
+#skillTab{
+display:block;
+position: absolute;
+top: 300px;
+left: 10px;
+width:200px;
+height:260px;
+background-color: rgba(0,0,0,0.5);
+border-radius: 10px;
+padding: 3px;
+}
+
+#skillTab td{
+font-size:10px;
+}
+
+.description{
+display:block;
+position: absolute;
+width:200px;
+background-color: rgba(0,0,0,0.5);
+border-radius: 3px;
+padding: 3px;
+}
+
+#aptitudeTab{
+display:block;
+position: absolute;
+top: 60px;
+left: 520px;
+width:250px;
+background-color: rgba(0,0,0,0.5);
+border-radius: 10px;
+padding: 3px;
+}
+
+#aptitudeTab td{
+font-size:10px;
+padding: 1px;
+text-align:center;
+}
+
+#aptitudeTab input{
+font-size:10px;
+padding: 0px;
+background-color: rgba(0,0,0,0.0);
+color: white;
+border:none;
+}
+
+#aptitudeTab form{
+margin-top:0;
+margin-bottom:0;
+}
+
+#pauseTab{
+display:block;
+position: absolute;
+top: 250px;
+left: 300px;
+font-size:32px;
+}
+
+#rightTab{
+display:block;
+position: absolute;
+top: 10px;
+left: 830px;
+width:600;
+}
+
+#status{
+display:block;
+position:absolute;
+z-index: 2;
+top: 5px;
+left: 5px;
+background-color: rgba(0,0,0,0.5);
+border-radius: 3px;
+padding: 0px;
+background-image:url('data/text/emptyBar.png');
+background-size:100%;
+width:150;
+height:60;
+}
+
+#status img{
+display:block;
+position:relative;
+}
+
+#status hp{
+display:block;
+position:relative;
+top: -57px;
+left: 50px;
+}
+
+#status sp{
+display:block;
+position:relative;
+top: -53px;
+left: 50px;
+}
+
+#status mp{
+display:block;
+position:relative;
+top: -49px;
+left: 50px;
+}
+
+
