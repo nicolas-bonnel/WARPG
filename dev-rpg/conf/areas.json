@@ -1,0 +1,45 @@
+[
+{ 
+  "name": "start",
+  "shape": {"type":"circle","radius":"30"},
+  "staticElements": [{"model":"rhan_shrine","count":"1"},{"model":"LongHouse","count":"5"},{"model":"trainingdummy","count":"3"},{"model":"trainingpole","count":"3"},{"model":"trainingtarget","count":"3"}],
+  "creatures": [{"creature":"Chest","count":"4"}],
+  "constrains":["inclMax<0.02"]
+},
+{ 
+  "name": "forest",
+  "shape": {"type":"circle","radius":"100+rand()*50"},
+  "staticElements": [{"model":"tree1","count":"rand()*0.03*surface"},{"model":"tree2","count":"rand()*0.03*surface"},{"model":"tree3","count":"rand()*0.04*surface"},{"model":"fern","count":"rand()*0.4*surface"}],
+  "creatures": [{"creature":"Antlion","count":"0.01+0.1*surface*rand()"},{"creature":"Chest","count":"4"}],
+  "constrains":["altitude<=100"]
+},
+{ 
+  "name": "Pine forest",
+  "shape": {"type":"circle","radius":"100+rand()*50"},
+  "staticElements": [{"model":"pino2","count":"rand()*0.3*surface"}],
+  "creatures": [{"creature":"Spider","count":"0.01+0.1*surface*rand()"},{"creature":"Chest","count":"4"}],
+  "constrains":["altitude>100"]
+},
+{ 
+  "name": "village",
+  "shape": {"type":"circle","radius":"30"},
+  "staticElements": [{"model":"house1","count":"2"},{"model":"house2","count":"2"},{"model":"LongHouse","count":"3"},{"model":"well","count":"1","position":"center"}],
+  "creatures": [{"creature":"Minotaur","count":"0.01+0.02*surface*rand()"},{"creature":"Chest","count":"2"}],
+  "constrains":["inclMax<0.03"]
+},
+{ 
+  "name": "igloo village",
+  "shape": {"type":"circle","radius":"30"},
+  "staticElements": [{"model":"igloo","count":"2+5*rand()"}],
+  "creatures": [{"creature":"Minotaur","count":"0.01+0.02*surface*rand()"},{"creature":"Chest","count":"2"}],
+  "constrains":["inclMax<0.03","altitude>110"]
+},
+{ 
+  "name": "cemetary",
+  "shape": {"type":"circle","radius":"40"},
+  "disposition":"sameOrient",
+  "staticElements": [{"model":"grave1","count":"5+5*rand()"},{"model":"grave2","count":"5+5*rand()"},{"model":"grave3","count":"5+5*rand()"},{"model":"grave4","count":"5+5*rand()"},{"model":"grave5","count":"5+5*rand()"},{"model":"grave6","count":"5+5*rand()"}],
+  "creatures": [{"creature":"Skeleton","count":"0.01+0.05*surface*rand()"},{"creature":"Chest","count":"3"}],
+  "constrains":["inclMax<0.03"]
+}
+]

@@ -1,0 +1,45 @@
+# Blender3D MTL File: HouseLong.blend
+# Material Count: 4
+newmtl Material
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+
+
+newmtl Material.001_HouseLong.png.jpg
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.031875 0.001891 0.001891
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd HouseLong.jpg
+
+
+newmtl Material_HouseLong.png.jpg
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd HouseLong.jpg
+
+
+newmtl Material.002_HouseLong.png.jpg
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd HouseLong.jpg
+
+

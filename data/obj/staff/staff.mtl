@@ -1,0 +1,35 @@
+# Blender MTL File: 'staff.blend'
+# Material Count: 3
+newmtl GreenGold_staff.jpg
+Ns 37.254902
+Ka 0.000000 0.000000 0.000000
+Kd 0.369843 0.751150 0.263722
+Ks 1.191853 1.400000 1.120000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd staff.jpg
+
+
+newmtl Silver_staff.jpg
+Ns 27.450980
+Ka 0.000000 0.000000 0.000000
+Kd 0.773666 0.773666 0.773666
+Ks 0.800000 0.800000 0.800000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd staff.jpg
+
+
+newmtl Wood_staff.jpg
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.547094 0.519402 0.412008
+Ks 0.179751 0.179751 0.179751
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd staff.jpg
+
+

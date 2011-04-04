@@ -1,0 +1,74 @@
+<html>
+<head>  
+	<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+	<link type="text/css" rel="stylesheet" href="loader.css" media="screen" />
+
+<script type="text/javascript">
+	var reqSkills = new XMLHttpRequest();
+	reqSkills.open('GET', 'conf/skills.json', true);
+	reqSkills.onreadystatechange = function() { 
+		if(reqSkills.readyState == 4)
+			if (reqSkills.responseText.length>0){
+				var jsonSkillArr = eval('('+reqSkills.responseText+')');
+				for (var k=0;k<jsonSkillArr.length;k++){
+					var m = document.createElement("div");
+					m.innerHTML = "<img src=../data/icons/"+jsonSkillArr[k].icon+"></img><br><b>"+jsonSkillArr[k].name+"</b><br>Sum of (";
+					for (var i=0;i<jsonSkillArr[k].aptitudes.length;i++)
+						m.innerHTML += jsonSkillArr[k].aptitudes[i]+" ";
+					m.innerHTML += ") greater or equal to "+jsonSkillArr[k].level+"<br>"  +jsonSkillArr[k].description+"<hr>";
+					document.getElementById("skills").appendChild(m);
+				}
+			}
+	}
+	reqSkills.send(null);
+</script>
+</head>
+<body>
+
+<h1>Skills</H1>
+<div id="skills"></div>
+
+<h1>Planned skills</H1>
+
+<ol>
+<li>Ranged attack (ranged)</li>
+<li>Meteor (cast, fire, earth, aoe)</li>
+<li>Explosion (cast, aoe, fire, air)</li>
+<li>Fire wall (cast, aoe, fire, dot)</li>
+<li>Immolation (hex, fire, dot)</li>
+<li>Fire weapon (enchant, fire)</li>
+<li>Frozen weapon (enchant, water)</li>
+<li>Lightning weapon (enchant, air)</li>
+<li>Poison weapon (enchant, dark, dot)</li>
+<li>Freeze (hex, water, dot)</li>
+<li>Ice nova (cast, water, aoe)</li>
+<li>Fire storm (cast, aoe, dot, air, fire)</li>
+<li>Gale (cast, air, aoe)</li>
+<li>Blind (hex, air)</li>
+<li>Frost ball (cast, water)</li>
+<li>Earth armor (enchant, earth, block)</li>
+<li>Poison nova (cast, dark, aoe, dot)</li>
+<li>Earthquake (cast, aoe, dot, earth)</li>
+<li>Pulverize (cast, aoe, earth)</li>
+<li>Gash (melee, sword, dot)</li>
+<li>Hammer stomp (melee, hammer, earth, aoe)</li>
+<li>Counter attack (block, melee)</li>
+<li>Ice shield (block, enchant, ice)</li>
+<li>Quick attack (melee, air)</li>
+<li>Whirlwind attack (melee, aoe, air)</li>
+<li>Confusion (hex, dark)</li>
+<li>Teleport (cast, air, move)</li>
+<li>Poison blade (melee, sword, dark magic, dot)</li>
+<li>Poison arrow (ranged, bow, dark magic, dot)</li>
+<li>Thunder spear (melee, Air)</li>
+<li>Dust (enchant, air, earth, aoe)</li>
+<li>Dragon breathe (cast, air, fire ,aoe, dot)</li>
+<li>Stalagmite (cast, earth, water)</li>
+<li>Cure (cast, light)</li>
+<li>Regeneration (Enchant, light)</li>
+
+</ol>
+
+
+</body>
+</html>
