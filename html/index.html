@@ -383,9 +383,10 @@ GAME PAUSED
 </div>
 <div id="rightTab">
 <h2>WebGL RPG / Hack & Slash</h2>
-This demo has only been tested with chrome 10. It may work with older versions of chrome, and some features do not work with firefox 4.0 (skill drag & drop). You will probably need to download a beta of a recent browser to see this demo: <a href="http://khronos.org/webgl/wiki/Getting_a_WebGL_Implementation">getting a WebGL Implementation.</a> If you need information about this demo, you can contact me : nicolas dot bonnel at gmail dot com. The code is licenced under GNU GPL 3. Feel free to reuse the code, credits would be appreciated.<br>
+This demo has only been tested with chrome 10 and firefox 4.0. It may work with older versions of chrome, and some features do not work with firefox 4.0 (skill drag & drop). You will probably need to download a beta of a recent browser to see this demo: <a href="http://khronos.org/webgl/wiki/Getting_a_WebGL_Implementation">getting a WebGL Implementation.</a> If you need information about this demo, you can contact me : nicolas dot bonnel at gmail dot com. The code is licenced under GNU GPL 3. Feel free to reuse the code, credits would be appreciated.<br>
 <br>
-
+To use various skills, open the aptitude tab ('L' shortcut), click either on 'cast' or 'melee', and drag & drop skills on the shortcut bar. At the start you will only have 2 skills available : melee attack (melee) and magic projectile (cast). When you use a skill, you level up aptitudes this skill is linked to. When you gain levels in aptitudes, you will have new skills available ! See the complete skill list <a href="https://github.com/nicolas-bonnel/WARPG/wiki/Skills">here.</a>
+<br>
 <h3>Controls</h3>
 For the moment, controls are hardcoded. No WASD because I use a french keyboard layout :).
 <ul>
@@ -404,53 +405,12 @@ For the moment, controls are hardcoded. No WASD because I use a french keyboard 
 <li>Show/hide settings panel : O</li> 
 </ul>
 
-<h3>News / Changelog</h3>
-<ul><li>04/03/2011 : Added new items: different armor parts, new weapons (wooden and iron style). Items now have a quality (normal, magical, rare, epic) and powers (+damage or +stat). Added chests that drops higher quality loot (A to open). Added a trash in the inventory menu. Modified some stats for monsters. Added new models : training stuff and new trees.</li>
-<li>03/22/2011 : Added a new monster : spider (thanks to Wciow and John.d.h). New model for the hero : a goth woman (thanks to TiZiana). The quality of animations is quite poor: this is my first attempt at animating a 3D model :P. You can now switch weapon with the ones you dropped. Reduced the map size: the previous maps were a little too big, causing overflows in vertices buffers. Improved transparency: trees should have a better look.</li>
-<li>03/12/2011 : Monsters can now drop items. Added new items (katana, staff, mace, HP, SP and MP potions). While weapons are not usable, potions stack and are usable (they give 10 units back). Started to work on the inventory. Started to use jquery : skills and items should now be draggable with all recent browsers. The description of skills and items is now shown when the mouse is over the icon.</li>
-<li>03/05/2011 : Removed the map file, now the map is randomly generated with square & diamond algorithm and is a little bit larger. Switched matrix library to glUtils (link is in the credit page) which is a lot faster. Added an area concept : the map is composed of various areas linked together by paths. Added a starting point, with a shrine, when you die you will revive there. Monsters level is now given by the level of an area, which increase with the distance in the graph of the starting point. Added cemetery objects, this still need some improvements to make nice graveyards. Added skeleton enemies. The drawback of these updates : loading time has increase (between 5 and 10 sec). I'll add a loading screen soon. I think next update will focus on inventory implementation and cross browser compatible drag & drop (I plan using JQuery, for the moment drag & drop works only with chrome).</li>
-<li>02/27/2011 : Added new skills : thunder, thunder strike, nova, flame nova. Started moving other definitions (animations, items, creatures, models characteristics, areas) in external config files.</li>
-<li>02/24/2011 : Added new skills : lightning, blizzard, inferno, burning attack. The shortcut tab now has a background image. Improved the skill selection interface: skill cost and damages are now shown.</li>
-<li>02/20/2011 : Added new skills : flare, magic missile, precise attack, power attack. Added a skill selection interface: you can drag & drop skills to the shortcut bar and use them by clicking on their icon. Skills now have a level requirement: to use the skill, the sum of the aptitudes this skill relies on must be equal or greater to the required level.</li>
-<li>02/15/2011 : Added a magic skill : fireball. Skills, projectiles and particules definition have been exported to json files.</li>
-<li>02/06/2011 : Added various objects, the map may be overloaded for lower hardware, but with a small view radius it should be ok. Now you can level up dexterity (by avoiding attacks) and sword mastery. Melee aptitude is for hit rate, dexterity for dodging and sword is for damages. Monsters' level increases with the distance to the center of the map.</li>
-<li>02/03/2011 : Made some refactoring. Now you can strafe. Added some particule effects : little flames when attacking with weapon, blood and numbers when hit. Characters now have a faction and monsters can hit you. When hit you enter in recovery mode and current action is canceled. Now you can die and revive to (0,0) with 1 hp after 10 sec. Started to implement aptitudes and xp system : you can level up constitution, stamina and melee (no effect for the last). Magic and spells are coming soon :).</li>
-<li>01/31/2011 : Added a particule system.</li>
-<li>01/27/2011 : Added two panels for settings and aptitudes. Drawing radius is now customizable.</li>
-<li>01/26/2011 : Removed the Interface class : now the interface is drawn with HTML + CSS. Added Status bar : health, stamina and mana. When monsters die, they slowly disapear under the ground. Reduced view radius to improve performances on lower hardware, I'll soon add the possibility to customize it.</li>
-<li>01/25/2011 : Improved collision detection (tangent computation). Removed the goblin, added antlion and minotaur. Models are now textured. Monsters have an health disk bellow them and can now die. Improved drawing (objects in the view radius but in the back are not drawn anymore).</li>
-<li>01/22/2011 : Added collision detection. This still needs some improvements : collision tangent computation (so that the object can still move forward along the tangent) and multiple bounding boxes for complex object.</li>
-<li>01/21/2011 : Added more models (chest, house, shrine, trees). Added goblins, they are static and play an idle animation.</li>
-<li>01/20/2011 : Added sky, fog and a grid system for optimization, there is now 1000 trees on the map and the demo should run on lower hardware.</li>
-</ul>
-
 <h3>Links</h3>
-<a href="aptitudes.html">Aptitudes and leveling system</a><br>
-<a href="skills.html">Planned skills</a><br>
-<a href="credits.html">Credits</a><br>
-2 very usefull links:<br> 
+<a href="https://github.com/nicolas-bonnel/WARPG/wiki/Credits">Credits</a><br>
+<a href="https://github.com/nicolas-bonnel/WARPG/wiki/">Wiki</a><br>
 <a href="http://learningwebgl.com/blog/">My webGL knowledge come from here, some parts of code too :)</a><br>
 All the models come from opengameart.org, great site !<br>
 <a href="http://opengameart.org/"><img src="data/oga.png"></img></a>
-
-<h3>Todo</h3>
-<ul>
-<li>Add NPCs</li>
-<li>Add Quest system</li>
-<li>Add more content (items, particle effect, skills, monsters, models, ...)</li>
-<li>Balancing (skills, items, monsters, ...)</li> 
-<li>Add skills to monsters</li>
-<li>Groups of monsters, bosses</li>
-<li>Improve IA</li>
-<li>Improve the website (credit page, skills, aptitudes, main page)</li>
-<li>Clean the code, comment it, ...</li>
-<li>...</li>
-</ul>
-
-<h3>Known bugs / lacking feature</h3>
-<ul>
-<li>Static normals with animated models</li>
-</ul>
 
 </div>
 
