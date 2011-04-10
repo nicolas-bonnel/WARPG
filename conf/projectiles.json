@@ -152,5 +152,20 @@
   "radius":"10.0",
   "loop":true,
   "collisionEffect":"nova"
+},
+{ 
+  "name": "ice nova",
+  "lifeDraw": [{"particle":"ice nova"}],
+  "finishDraw": [],
+  "duration": 1.0,
+  "startX":"0.0",
+  "startY":"0.0",
+  "startZ":"0.0",
+  "speedX":"0.0",
+  "speedY":"0.0",
+  "speedZ":"0.0",
+  "radius":"10.0",
+  "loop":true,
+  "collisionEffect":"nova"
 }
 ]

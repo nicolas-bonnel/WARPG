@@ -220,5 +220,19 @@
   "lifeEffects": [{"particle":"charge"}],
   "finishEffects": [{"projectiles":"fire nova"}],
   "description":"Damage all enemies around the caster."
+},
+{ 
+  "name": "Ice Nova",
+  "icon": "nova.png",
+  "level": 15,
+  "cost": ["0","0","water"],
+  "target": "ennemy",
+  "damages": [{"type":"water","value":"water/2.0+1.0","range":0.2}],
+  "aptitudes": ["cast","water","aoe"] ,
+  "action": "cast",
+  "numProjs": "1.0",
+  "lifeEffects": [{"particle":"charge"}],
+  "finishEffects": [{"projectiles":"ice nova"}],
+  "description":"Damage all enemies around the caster."
 }
 ]

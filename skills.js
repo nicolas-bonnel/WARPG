@@ -54,7 +54,7 @@ function Action(parent,skill){
 
 function skillDescription(sk){
 	setAptitudeVars(world.player);
-	var descrip ='<div class="description" style=left:'+mouseX+';top:'+mouseY+';><font color="#AAFFAA">'+ skills[sk].name +'</font><br>'+skills[sk].description+'<br>Cost:';
+	var descrip ='<div class="description" style=left:'+(mouseX+2)+';top:'+(mouseY+2)+';><font color="#AAFFAA">'+ skills[sk].name +'</font><br>'+skills[sk].description+'<br>Cost:';
 	if(eval(skills[sk].cost[0])>0)
 		descrip += ' <font color="#FF7777">'+eval(skills[sk].cost[0])+' HP</font>';
 	if(eval(skills[sk].cost[1])>0)
