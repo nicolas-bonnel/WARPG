@@ -3,7 +3,7 @@
   "name": "start",
   "shape": {"type":"circle","radius":"30"},
   "staticElements": [{"model":"rhan_shrine","count":"1"},{"model":"LongHouse","count":"5"},{"model":"trainingdummy","count":"3"},{"model":"trainingpole","count":"3"},{"model":"trainingtarget","count":"3"}],
-  "creatures": [{"creature":"Chest","count":"4"}],
+  "creatures": [{"creature":"Chest","count":"4"},{"creature":"Trader","count":"4"}],
   "constrains":["inclMax<0.02"]
 },
 { 

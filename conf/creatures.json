@@ -54,13 +54,14 @@
 },
 { 
   "name": "Trader",
-  "modelName":"trader",
+  "modelName":"clintbellanger",
   "faction": "good",
   "hpspmp":["10","10","10"],
   "aptitudes":[],
   "skills":[],
   "resists": [],
   "gear":[],
+  "activation": {"type":"trade"},
   "scale":"1.0"
 },
 { 

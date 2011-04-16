@@ -182,8 +182,11 @@ function handleKeys() {
 	if (currentlyPressedKeys[65]) { // a
 		var objs = world.getObjNear(world.player.x,world.player.y,1);
 		for (var i=0;i<objs.length;i++)
-			if(objs[i].properties && objs[i].properties.activation && objs[i].properties.activation.type == 'loot' && dist(objs[i],world.player)<2.0 && objs[i].currentAction.type=='idle'){
-				objs[i].currentAction = new  Action(objs[i],skills['open']);
+			if(objs[i].properties && objs[i].properties.activation && dist(objs[i],world.player)<2.0 && objs[i].currentAction.type=='idle'){
+				if (objs[i].properties.activation.type == 'loot')
+					objs[i].currentAction = new  Action(objs[i],skills['open']);
+				else if (objs[i].properties.activation.type == 'trade')
+					debug('trading');
 			}
 	}
 }
@@ -219,6 +222,11 @@ function webGLStart() {
 	document.onkeyup = handleKeyUp;
 	initFromJSON();
 	world = new World();
+	var quest = '(quest)';
+	for (var i=0;i<3;i++){
+		quest = expandQuest(quest);
+		debug(quest);
+	}
 }
 
 function allLoaded(){
