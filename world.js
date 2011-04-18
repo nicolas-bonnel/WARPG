@@ -1,6 +1,6 @@
 /* WebGL 3D world class
  *
- * Copyright (C) 2010   Nicolas Bonnel (nicolas.bonnel@gmail.com)
+ * Copyright (C) 2011   Nicolas Bonnel (nicolas.bonnel@gmail.com)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@ World = function(){
 	this.particles = [];
 	this.tileSize = 10.0;
 	this.gridSize = 10.0;
+	this.events = [];
 	this.graph = this.generateTerrain(7);
 }
 
@@ -296,6 +297,14 @@ World.prototype.sortZ = function(){
 	this.objectsWithAlpha = newTab;
 }
 
+World.prototype.processEvents = function(){
+	for (var i=0;i<this.events.length;i++){
+		//if(this.events[i][0]=='dead')
+			debug(this.events[i][1].modelName+' '+this.events[i][0]);
+	}
+	this.events = [];
+}
+
 World.prototype.draw = function(elapsed){
 	if(this.player){
 		mat4.rotate(mvMatrix, degToRad(-70), [1, 0, 0]);
@@ -342,6 +351,7 @@ World.prototype.draw = function(elapsed){
 				}
 			}
 		}
+
 		gl.enable(gl.BLEND);
 		//this.sortZ();
 		for(var i=0;i<this.objectsWithAlpha.length;i++)

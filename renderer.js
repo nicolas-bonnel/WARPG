@@ -26,6 +26,21 @@ var elapsed ;
 var viewDist = -10;
 var currentlyPressedKeys = Object();
 var pause = false;
+var keyMap = {}
+keyMap['pause'] = 80; // p 
+keyMap['aptitude'] = 76; // l
+keyMap['quests'] = 75; // k
+keyMap['settings'] = 79; // o
+keyMap['inventory'] = 73; // i
+keyMap['pick'] = 81; // q
+keyMap['activate'] = 65; // a
+keyMap['forward'] = 69; // e
+keyMap['strafeLeft'] = 90; // z
+keyMap['strafeRight'] = 82; // r
+keyMap['backward'] = 68; // d
+keyMap['turnLeft'] = 83; // s
+keyMap['turnRight'] = 70; // f
+keyMap['skill'] = 84; // t
 
 function initGL(canvas) {
 	try {
@@ -43,18 +58,10 @@ function drawScene() {
     	gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
     	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     	mat4.perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 1000.0,pMatrix);
-	gl.enable(gl.DEPTH_TEST);
     	mat4.identity(mvMatrix);
-	//mvTranslate([0.0, -2.0, 0.0]);
-	mvPushMatrix();
 	mat4.translate(mvMatrix,[0.0, 0.0, viewDist]);
 	if (world)
 		world.draw(elapsed);
-	mvPopMatrix();
-	mat4.translate(mvMatrix,[0.0, 0.0, -7]);
-	
-	gl.disable(gl.DEPTH_TEST);
-	gl.enable(gl.BLEND);
   }
 
 
@@ -80,84 +87,65 @@ function handleKeyUp(event) {
 
 function handleKeys() {
 	world.player.speed = 0.0;
-	if (currentlyPressedKeys[69] && currentlyPressedKeys[90]){ // e z
+	if (currentlyPressedKeys[keyMap['forward']] && currentlyPressedKeys[keyMap['strafeLeft']]){ // e z
 		world.player.speed = 6.0;
 		world.player.setAction(skills['walkF']);
 		animations[world.player.modelName]['walkF'].speed = world.player.speed*2;
 		world.player.moveAngle = 45;
-	}else if (currentlyPressedKeys[69] && currentlyPressedKeys[82]){ // e r
+	}else if (currentlyPressedKeys[keyMap['forward']] && currentlyPressedKeys[keyMap['strafeRight']]){ // e r
      		world.player.speed = 6.0;
 		world.player.setAction(skills['walkF']);
 		animations[world.player.modelName]['walkF'].speed = world.player.speed*2;
 		world.player.moveAngle = 315;
-	}else if (currentlyPressedKeys[68] && currentlyPressedKeys[90]){ // d z
+	}else if (currentlyPressedKeys[keyMap['backward']] && currentlyPressedKeys[keyMap['strafeLeft']]){ // d z
      		world.player.speed = 4.0;
 		world.player.setAction(skills['walkB']);
 		animations[world.player.modelName]['walkB'].speed = world.player.speed*2;
 		world.player.moveAngle = 135;
-	}else if (currentlyPressedKeys[68] && currentlyPressedKeys[82]){ // d r
+	}else if (currentlyPressedKeys[keyMap['backward']] && currentlyPressedKeys[keyMap['strafeRight']]){ // d r
      		world.player.speed = 4.0;
 		world.player.setAction(skills['walkB']);
 		animations[world.player.modelName]['walkB'].speed = world.player.speed*2;
 		world.player.moveAngle = 225;
-	}else if (currentlyPressedKeys[69]){ // e
+	}else if (currentlyPressedKeys[keyMap['forward']]){
 		world.player.speed = 8.0;
 		world.player.setAction(skills['walkF']);
 		animations[world.player.modelName]['walkF'].speed = world.player.speed*2;
 		world.player.moveAngle = 0;
-	}else if (currentlyPressedKeys[68]){ // d
+	}else if (currentlyPressedKeys[keyMap['backward']]){
      		world.player.speed = 4.0;
 		world.player.setAction(skills['walkB']);
 		animations[world.player.modelName]['walkB'].speed = world.player.speed*2;
 		world.player.moveAngle = 180;
-	}else if (currentlyPressedKeys[90]){ // z
+	}else if (currentlyPressedKeys[keyMap['strafeLeft']]){
      		world.player.speed = 4.0;
 		world.player.setAction(skills['walkF']);
 		animations[world.player.modelName]['walkF'].speed = world.player.speed*2;
 		world.player.moveAngle = 90;
-	}else if (currentlyPressedKeys[82]){ // r
+	}else if (currentlyPressedKeys[keyMap['strafeRight']]){
      		world.player.speed = 4.0;
 		world.player.setAction(skills['walkF']);
 		animations[world.player.modelName]['walkF'].speed = world.player.speed*2;
 		world.player.moveAngle = 270;
 	}
-	if (currentlyPressedKeys[83]){ // s
+	if (currentlyPressedKeys[keyMap['turnLeft']])
 		world.player.orient +=90*elapsed;
-	}else if (currentlyPressedKeys[70]){ // f
+	else if (currentlyPressedKeys[keyMap['turnRight']])
      		world.player.orient -=90*elapsed;
-	}
-	if (currentlyPressedKeys[84]) { // t
+
+	if (currentlyPressedKeys[keyMap['skill']])
   		world.player.setAction(skills['Melee attack']);//attack
-	}
-	if (currentlyPressedKeys[76]) { //l
-		currentlyPressedKeys[76] = false;
-		if (document.getElementById('aptitudeTab').style.visibility == 'hidden')
-			document.getElementById('aptitudeTab').style.visibility = 'visible';
-		else
-			document.getElementById('aptitudeTab').style.visibility = 'hidden';
-	}
-	if (currentlyPressedKeys[75]) { //k
-		currentlyPressedKeys[75] = false;
-		if (document.getElementById('questsTab').style.visibility == 'hidden')
-			document.getElementById('questsTab').style.visibility = 'visible';
-		else
-			document.getElementById('questsTab').style.visibility = 'hidden';
-	}
-	if (currentlyPressedKeys[79]) { //o
-		currentlyPressedKeys[79] = false;
-		if (document.getElementById('settingsTab').style.visibility == 'hidden')
-			document.getElementById('settingsTab').style.visibility = 'visible';
-		else
-			document.getElementById('settingsTab').style.visibility = 'hidden';
-	}
-	if (currentlyPressedKeys[73]) { //i
-		currentlyPressedKeys[73] = false;
-		if (document.getElementById('inventoryTab').style.visibility == 'hidden')
-			document.getElementById('inventoryTab').style.visibility = 'visible';
-		else
-			document.getElementById('inventoryTab').style.visibility = 'hidden';
-	}
-	if (currentlyPressedKeys[81]) { // q
+
+	if (currentlyPressedKeys[keyMap['aptitude']])
+  		showTab('aptitude');
+	if (currentlyPressedKeys[keyMap['quests']])
+  		showTab('quests');
+	if (currentlyPressedKeys[keyMap['settings']])
+  		showTab('settings');
+	if (currentlyPressedKeys[keyMap['inventory']])
+  		showTab('inventory');
+
+	if (currentlyPressedKeys[keyMap['pick']]) {
 		var objs = world.getObjNear(world.player.x,world.player.y,1);
 		var pickables = [];
 		for (var i=0;i<objs.length;i++)
@@ -167,6 +155,7 @@ function handleKeys() {
 		if(pickables.length>0 && firstEmptyCell.length>0){
 			var picked = pickables[Math.floor(rand()*pickables.length)];
 			world.removeObjectFromGrid(picked);
+			world.events.push(['picked',picked]);
 			picked.pickable.alive = false;
 			if(picked.stackable && $('div[name="'+picked.name+'"]').length>0){
 				var it = $('div[name="'+picked.name+'"]').first();
@@ -179,33 +168,40 @@ function handleKeys() {
 			}
 		}
 	}
-	if (currentlyPressedKeys[65]) { // a
+	if (currentlyPressedKeys[keyMap['activate']]) {
 		var objs = world.getObjNear(world.player.x,world.player.y,1);
 		for (var i=0;i<objs.length;i++)
 			if(objs[i].properties && objs[i].properties.activation && dist(objs[i],world.player)<2.0 && objs[i].currentAction.type=='idle'){
 				if (objs[i].properties.activation.type == 'loot')
 					objs[i].currentAction = new  Action(objs[i],skills['open']);
-				else if (objs[i].properties.activation.type == 'trade')
-					debug('trading');
+				else if (objs[i].properties.activation.type == 'trade'){
+					document.getElementById('vendorTab').style.visibility = 'visible';
+				}
 			}
 	}
 }
 
+function showTab(tab){
+	currentlyPressedKeys[keyMap[tab]] = false;
+	if (document.getElementById(tab+'Tab').style.visibility == 'hidden')
+		document.getElementById(tab+'Tab').style.visibility = 'visible';
+	else
+		document.getElementById(tab+'Tab').style.visibility = 'hidden';
+}
+
 function tick() {
-	if (currentlyPressedKeys[80]) { // p
-  		currentlyPressedKeys[80] = false;
+	if (currentlyPressedKeys[keyMap['pause']]) { // p
+  		showTab('pause');
 		pause = !pause;
-		lastTime = new Date().getTime();
-		if (pause)
-			document.getElementById('pauseTab').style.visibility = 'visible';
-		else
-			document.getElementById('pauseTab').style.visibility = 'hidden';
+		lastTime = (new Date()).getTime();
 	}
 	if(!pause){
 		if (world && world.player)
 			handleKeys();
 		animate();
 		drawScene();
+		if(world)
+			world.processEvents();
 	}
 }
 
@@ -236,108 +232,120 @@ function allLoaded(){
 function initJqueryFunc(){
 	$('#canvas3D').mousemove(function(e){mouseX = e.pageX - this.offsetLeft;mouseY = e.pageY - this.offsetTop;});
 	$('#shortcutTable td').droppable({
-				accept:'.skill,.item.consumable',
-				drop:function( event, ui ) {
-					//debug(src.droppable('option','accept'));
-					if(src.attr('class')=='ui-droppable' && $(this).children(src.droppable('option','accept')).length>0)
-						src.append($(this).children(src.droppable('option','accept')));
-					else if($(this).children('.skill').length>0){
-						$(this).children().remove();
-						//src.append(ui.draggable.clone());
-					}
-					if($(this).children('.item').length==0)
-						$(this).append( ui.draggable );
-				}
-			});
+		accept:'.skill,.item.consumable',
+		drop:function( event, ui ) {
+			//debug(src.droppable('option','accept'));
+			if(src.attr('class')=='ui-droppable' && $(this).children(src.droppable('option','accept')).length>0)
+				src.append($(this).children(src.droppable('option','accept')));
+			else if($(this).children('.skill').length>0){
+				$(this).children().remove();
+				//src.append(ui.draggable.clone());
+			}
+			if($(this).children('.item').length==0)
+				$(this).append( ui.draggable );
+		}
+	});
 	$('#inventoryTable td').droppable({
-				accept:'.item',
-				drop:function( event, ui ) {
-					if($(this).children(src.droppable('option','accept')).length>0)
-						src.append($(this).children());
-					if($(this).children('.item').length==0)
-						$(this).append( ui.draggable );
-					var str = src.droppable('option','accept');
-					if(str.length>6)
-						if(src.children().length>0)
-							world.player.addEquipment(world.player.inventory[src.children().first().attr('id')]);
-						else
-							world.player.removeEquipment(str.substring(6,str.length));
-				}
-			});
+		accept:'.item',
+		drop:function( event, ui ) {
+			if($(this).children(src.droppable('option','accept')).length>0)
+				src.append($(this).children());
+			if($(this).children('.item').length==0)
+				$(this).append( ui.draggable );
+			var str = src.droppable('option','accept');
+			if(str.length>6)
+				if(src.children().length>0)
+					world.player.addEquipment(world.player.inventory[src.children().first().attr('id')]);
+				else
+					world.player.removeEquipment(str.substring(6,str.length));
+		}
+	});
 	$('#leftgear div').eq(0).droppable({
-				accept:'.item.helmet',
-				drop:function( event, ui ) {
-					src.append($(this).children());
-					$(this).append( ui.draggable );
-					world.player.addEquipment(world.player.inventory[$(this).children().first().attr('id')]);
-				}
-			});
+		accept:'.item.helmet',
+		drop:function( event, ui ) {
+			src.append($(this).children());
+			$(this).append( ui.draggable );
+			world.player.addEquipment(world.player.inventory[$(this).children().first().attr('id')]);
+		}
+	});
 	$('#leftgear div').eq(1).droppable({
-				accept:'.item.pauldrons',
-				drop:function( event, ui ) {
-					src.append($(this).children());
-					$(this).append( ui.draggable );
-					world.player.addEquipment(world.player.inventory[$(this).children().first().attr('id')]);
-				}
-			});
+		accept:'.item.pauldrons',
+		drop:function( event, ui ) {
+			src.append($(this).children());
+			$(this).append( ui.draggable );
+			world.player.addEquipment(world.player.inventory[$(this).children().first().attr('id')]);
+		}
+	});
 	$('#leftgear div').eq(2).droppable({
-				accept:'.item.gloves',
-				drop:function( event, ui ) {
-					src.append($(this).children());
-					$(this).append( ui.draggable );
-					world.player.addEquipment(world.player.inventory[$(this).children().first().attr('id')]);
-				}
-			});
+		accept:'.item.gloves',
+		drop:function( event, ui ) {
+			src.append($(this).children());
+			$(this).append( ui.draggable );
+			world.player.addEquipment(world.player.inventory[$(this).children().first().attr('id')]);
+		}
+	});
 	$('#leftgear div').eq(3).droppable({
-				accept:'.item.weapon',
-				drop:function( event, ui ) {
-					src.append($(this).children());
-					$(this).append( ui.draggable );
-					world.player.addEquipment(world.player.inventory[$(this).children().first().attr('id')]);
-				}
-			});
+		accept:'.item.weapon',
+		drop:function( event, ui ) {
+			src.append($(this).children());
+			$(this).append( ui.draggable );
+			world.player.addEquipment(world.player.inventory[$(this).children().first().attr('id')]);
+		}
+	});
 	$('#leftgear div').eq(4).droppable({
-				accept:'.item.pants',
-				drop:function( event, ui ) {
-					src.append($(this).children());
-					$(this).append( ui.draggable );
-					world.player.addEquipment(world.player.inventory[$(this).children().first().attr('id')]);
-				}
-			});
+		accept:'.item.pants',
+		drop:function( event, ui ) {
+			src.append($(this).children());
+			$(this).append( ui.draggable );
+			world.player.addEquipment(world.player.inventory[$(this).children().first().attr('id')]);
+		}
+	});
 	$('#leftgear div').eq(5).droppable({
-				accept:'.item.boots',
-				drop:function( event, ui ) {
-					src.append($(this).children());
-					$(this).append( ui.draggable );
-					world.player.addEquipment(world.player.inventory[$(this).children().first().attr('id')]);
-				}
-			});
+		accept:'.item.boots',
+		drop:function( event, ui ) {
+			src.append($(this).children());
+			$(this).append( ui.draggable );
+			world.player.addEquipment(world.player.inventory[$(this).children().first().attr('id')]);
+		}
+	});
 	$('#rightgear div').eq(1).droppable({
-				accept:'.item.armor',
-				drop:function( event, ui ) {
-					src.append($(this).children());
-					$(this).append( ui.draggable );
-					world.player.addEquipment(world.player.inventory[$(this).children().first().attr('id')]);
-				}
-			});
+		accept:'.item.armor',
+		drop:function( event, ui ) {
+			src.append($(this).children());
+			$(this).append( ui.draggable );
+			world.player.addEquipment(world.player.inventory[$(this).children().first().attr('id')]);
+		}
+	});
 	$('#rightgear div').eq(3).droppable({
-				accept:'.item.shield',
-				drop:function( event, ui ) {
-					src.append($(this).children());
-					$(this).append( ui.draggable );
-					world.player.addEquipment(world.player.inventory[$(this).children().first().attr('id')]);
-				}
-			});
+		accept:'.item.shield',
+		drop:function( event, ui ) {
+			src.append($(this).children());
+			$(this).append( ui.draggable );
+			world.player.addEquipment(world.player.inventory[$(this).children().first().attr('id')]);
+		}
+	});
 	$('#trash').droppable({
-				accept:'.item',
-				drop:function( event, ui ) {
-					delete world.player.inventory[src.children().first().attr('id')];
-					src.children().remove();
-					var str = src.droppable('option','accept');
-					if(str.length>6)
-						world.player.removeEquipment(str.substring(6,str.length));
-				}
-			});
+		accept:'.item',
+		drop:function( event, ui ) {
+			delete world.player.inventory[src.children().first().attr('id')];
+			src.children().remove();
+			var str = src.droppable('option','accept');
+			if(str.length>6)
+				world.player.removeEquipment(str.substring(6,str.length));
+		}
+	});
+	$('#vendorTab').droppable({
+		accept:'.item',
+		drop:function( event, ui ) {
+			world.player.gold += world.player.inventory[src.children().first().attr('id')].goldCost;
+			$('#gold').html(world.player.gold+' gold');
+			delete world.player.inventory[src.children().first().attr('id')];
+			src.children().remove();
+			var str = src.droppable('option','accept');
+			if(str.length>6)
+				world.player.removeEquipment(str.substring(6,str.length));
+		}
+	});
 }
 
 function initWorld(collec){
@@ -379,6 +387,7 @@ function initWorld(collec){
 			var collid = world.getCollisions(startPoint.x+ox,startPoint.y+oy,modifs.collision.radius);
 		}while(ox*ox+oy*oy>startPoint.radius*startPoint.radius || collid.length>0);
 		world.player = new Character(creatures['Player'],startPoint.x+ox,startPoint.y+oy,1);
+		world.player.gold = 0;
 	}
 }
 
@@ -515,7 +524,7 @@ function initFromJSON(){
 function handle(delta) {
 	if(!pause)
 		if (delta < 0){
-			if(viewDist>-200)
+			if(viewDist>-20)
 				viewDist -=1;
 		}else
 			if(viewDist<1)

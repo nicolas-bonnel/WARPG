@@ -42,7 +42,8 @@ function Item(jsonItem,quality,itemLevel){
 		item.goldCost = jsonItem.goldCost;
 		item.description = jsonItem.description;
 		item.icon = jsonItem.icon;
-	}
+	}else
+		item.goldCost = 0;
 	if(jsonItem.stackable)
 		item.stackable = jsonItem.stackable;
 	item.id = item.name+(new Date().getTime());

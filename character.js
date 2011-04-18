@@ -215,6 +215,7 @@ Character.prototype.damage = function(dmgs){
 	this.currentHp -= damages;
 	this.currentAction.isInterruptible = true;
 	if(this.currentHp<=0.0){
+		world.events.push(['dead',this]);
 		this.currentHp = 0;
 		this.setAction(skills['die']);
 		if(this != world.player)
