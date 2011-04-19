@@ -23,6 +23,12 @@ numPower['magic'] = "1+Math.floor(rand()*2)";
 numPower['rare'] = "3+Math.floor(rand()*2)";
 numPower['epic'] = "5+Math.floor(rand()*2)";
 
+var priceModif = {};
+priceModif['normal'] = 1;
+priceModif['magic'] = 2;
+priceModif['rare'] = 4;
+priceModif['epic'] = 8;
+
 function Item(jsonItem,quality,itemLevel){
 	if(jsonItem.modelName){
 		//debug(jsonItem.modelName);
@@ -39,7 +45,7 @@ function Item(jsonItem,quality,itemLevel){
 		item.range = jsonItem.range;
 	}
 	if(jsonItem.goldCost){
-		item.goldCost = jsonItem.goldCost;
+		item.goldCost = jsonItem.goldCost*priceModif[quality];
 		item.description = jsonItem.description;
 		item.icon = jsonItem.icon;
 	}else
@@ -125,6 +131,8 @@ function itemDescription(item){
 		else if (item.powers[x].effect.type == 'bonus')
 			descrip += item.powers[x].effect.aptitude+'<br>';
 	}
+	if (item.goldCost>0)
+		descrip += '<font color="#EEEEAA">Price: '+item.goldCost+' gold.</font>';
 	descrip += '</div>';
 	return descrip;
 }
@@ -144,7 +152,6 @@ function loot(level,qual){
 	else
 		quality = 'normal';
 	var it = new Item(items[itemNames[Math.floor(rand()*itemNames.length)]],quality,level);
-	//it.orient = Math.random()*360;
 	it.pickable = new ParticleEmiter(it,'itemdrop');
 	world.particles.push(it.pickable);
 	return it;

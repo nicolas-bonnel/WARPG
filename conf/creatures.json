@@ -43,7 +43,7 @@
   "name": "Spider",
   "modelName":"spider",
   "faction": "evil",
-  "hpspmp":["1+4*level","8+2*level","4+level"],
+  "hpspmp":["4*level-1","8+2*level","4+level"],
   "aptitudes":[{"aptitude":"constitution","level":"1.5*level"},{"aptitude":"strength","level":"2+level"},{"aptitude":"melee","level":"1.2*level"},{"aptitude":"pierce","level":"2*level"},{"aptitude":"dexterity","level":"1+level/2.0"}],
   "skills":["Melee attack","Precise attack"],
   "resists": [{"earth":"0.2"}],

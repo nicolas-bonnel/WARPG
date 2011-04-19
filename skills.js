@@ -41,7 +41,7 @@ function Action(parent,skill){
 		if(skill.lifeEffects[i]=='disapear')
 			this.lifeEffects.push(new Disapear(parent));
 		else if(skill.lifeEffects[i].particle)
-			this.lifeEffects.push(new ParticleEmiter(parent,skill.lifeEffects[i].particle));
+			this.lifeEffects.push(new ParticleEmitter(parent,skill.lifeEffects[i].particle));
 	}
 	for (var i=0;i<skill.finishEffects.length;i++){
 		if(skill.finishEffects[i].MeleeHit)

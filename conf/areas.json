@@ -10,7 +10,7 @@
   "name": "forest",
   "shape": {"type":"circle","radius":"100+rand()*50"},
   "staticElements": [{"model":"tree1","count":"rand()*0.03*surface"},{"model":"tree2","count":"rand()*0.03*surface"},{"model":"tree3","count":"rand()*0.04*surface"},{"model":"fern","count":"rand()*0.4*surface"}],
-  "creatures": [{"creature":"Antlion","count":"0.01+0.1*surface*rand()"},{"creature":"Chest","count":"4"}],
+  "creatures": [{"creature":"Antlion","count":"0.01+0.1*surface*rand()"},{"creature":"Chest","count":"4"},{"creature":"Antlion boss","count":"1"}],
   "constrains":["altitude<=100"]
 },
 { 

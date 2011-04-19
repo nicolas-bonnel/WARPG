@@ -30,8 +30,6 @@ World = function(){
 	this.graph = this.generateTerrain(7);
 }
 
-//var baseUrl = 'http://www-valoria.univ-ubs.fr/Nicolas.Bonnel/3D/data/'; 
-
 
 function diamond(xMin,xMax,yMin,yMax,data,w,noise){
 	var x = (xMin+xMax)/2;
@@ -361,12 +359,15 @@ World.prototype.draw = function(elapsed){
 		gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
 		var newPart = [];
 		for (var i=0;i<this.particles.length;i++){
-			this.particles[i].draw();
+			var d = dist(this.player,this.particles[i].parent)
+			if (d<viewD)
+				this.particles[i].draw();
 			this.particles[i].process(elapsed);
 			if(this.particles[i].alive && this.particles[i].currentTime<this.particles[i].parts.duration)
 				newPart.push(this.particles[i]);
 			else
 				this.particles[i].finalize();
+			
 		}
 		//debug(this.particles.length+', '+newPart.length);
 		this.particles = newPart;
