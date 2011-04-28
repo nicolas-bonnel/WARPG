@@ -1,6 +1,6 @@
 /* Javascript Particle system class
  *
- * Copyright (C) 2010   Nicolas Bonnel (nicolas.bonnel@gmail.com)
+ * Copyright (C) 2011   Nicolas Bonnel (nicolas.bonnel@gmail.com)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,10 @@
  *
  */
 
+/*
+ Create a number particle, used for damages.
+ @ num the number to be displayed in the range [O;9]
+*/
 function NumberParticule(num){
 	this.loop = false;
 	this.duration = 1.0;
@@ -37,6 +41,13 @@ function NumberParticule(num){
 	this.mesh.initBuffers();
 }
 
+/*
+ Used to create tree particle systems such as lightnings.
+ @ px,py,pz : coordinate of previous particle in the tree.
+ @ mesh : the mesh of the particle system that will be sent to the graphic card.
+ @ num : number of remaining particle to create
+ @ jsonPart : a string describing a particle in json format
+*/
 function recPart(px,py,pz,mesh,num,jsonParts){
 	var x = px + eval(jsonParts.speedX);
 	var y = py + eval(jsonParts.speedY);
@@ -54,6 +65,10 @@ function recPart(px,py,pz,mesh,num,jsonParts){
 		recPart(x,y,z,mesh,num-1,jsonParts);
 }
 
+/*
+ Particle constructor
+ @ jsonParts : a string describing a particle in json format
+*/
 function Particles(jsonParts){
 	this.loop = jsonParts.loop;
 	this.duration = jsonParts.duration;
@@ -86,15 +101,23 @@ function Particles(jsonParts){
 	this.mesh.initBuffers();
 }
 
-
-function ParticleEmiter(parent,particle){
+/*
+ Create a particle emitter.
+ @ parent : an object with coordinates (x,y,z). Particles will be drawn on this object position. 
+ @ particle : a string which is the particle's name.
+*/
+function ParticleEmitter(parent,particle){
 	this.parent = parent;
 	this.currentTime = 0.0;
 	this.alive = true;
 	this.parts = particles[particle];
 }
 
-ParticleEmiter.prototype.process = function(elapsed){
+/*
+ Compute particles position according to elapsed time.
+ @ elapsed : elapsed time since last frame in seconds.
+*/
+ParticleEmitter.prototype.process = function(elapsed){
 	gl.useProgram(this.parts.mesh.shaderProgram);
 	this.currentTime += elapsed;
 	if (this.currentTime>this.parts.duration)
@@ -104,16 +127,21 @@ ParticleEmiter.prototype.process = function(elapsed){
 		else{
 			this.currentTime = this.parts.duration;
 			this.alive = false;
-			//debug(this.alive );
 		}
 	gl.uniform1f(this.parts.mesh.shaderProgram.time, this.currentTime/this.parts.duration);
 }
 
-ParticleEmiter.prototype.finalize= function(){
+/*
+ Used to terminate particles, or stop looping particle.
+*/
+ParticleEmitter.prototype.finalize= function(){
 	this.alive = false;
 }
 
-ParticleEmiter.prototype.draw = function(){
+/*
+ Particles drawing function. Draw the particles according to parent position and orientation.
+*/
+ParticleEmitter.prototype.draw = function(){
 	mvPushMatrix();
 	mat4.translate(mvMatrix,[this.parent.x,this.parent.y,this.parent.z]);
 	if(this.parent.orient)
@@ -121,33 +149,3 @@ ParticleEmiter.prototype.draw = function(){
 	this.parts.mesh.draw();
 	mvPopMatrix();	
 }
-
-/*
-ParticleEmiter.prototype.createFlame = function(vertices){
-	if(world.meshes[this.parent.modelName+'flame'])
-		this.mesh = world.meshes[this.parent.modelName+'flame'];
-	else{
-		this.mesh = new Mesh('particle');
-		world.meshes[this.parent.modelName+'flame'] = this.mesh;
-		this.mesh.materials.push(new Object());
-		this.mesh.materials[0].textures = [];
-		this.mesh.materials[0].textures.push(initTexture(baseUrl+'text/particle/firecloud.png'));
-		var numPart = 20;
-		for (var i=0;i<numPart;i++){
-			var rand = Math.floor(Math.random()*vertices.length/3);
-			this.mesh.vertices.push(vertices[3*rand]*0.4);
-			this.mesh.vertices.push(vertices[3*rand+1]*0.4);
-			this.mesh.vertices.push(vertices[3*rand+2]*0.4);
-			this.mesh.normals.push(Math.random());
-			this.mesh.normals.push(Math.random());
-			this.mesh.normals.push(1.0);
-
-			this.mesh.textures.push(Math.random());
-			this.mesh.textures.push(1.0);
-			this.mesh.textures.push(1.0);
-		}
-		this.mesh.initShaders();
-		this.mesh.initBuffers();
-	}
-}*/
-

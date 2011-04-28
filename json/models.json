@@ -2,7 +2,7 @@
 {  "modelName": "skeleton",  "type":"md5",  "orient": 180,  "transparent": false,  "collision": {"type":"circle","radius":1.6},  "scale":1.0},
 {  "modelName": "spider",  "type":"md5",  "orient": 180,  "transparent": false,  "collision": {"type":"circle","radius":1.0},  "scale":1.0},
 {  "modelName": "fleur_simplified",  "type":"md5",  "orient": 180,  "transparent": false,  "collision": {"type":"circle","radius":1.0},  "scale":1.0},
-{  "modelName": "trader",  "type":"md5",  "orient": 180,  "transparent": false,  "collision": {"type":"circle","radius":1.0},  "scale":1.0},
+{  "modelName": "clintbellanger",  "type":"md5",  "orient": 180,  "transparent": false,  "collision": {"type":"circle","radius":0.2},  "scale":1.2},
 {  "modelName": "thing",  "type":"md5",  "orient": 180,  "transparent": false,  "collision": {"type":"circle","radius":1.0},  "scale":0.2},
 {  "modelName": "antlion",  "type":"md5",  "orient": 180,  "transparent": false,  "collision": {"type":"circle","radius":1.0},  "scale":1.0},
 {  "modelName": "gob",  "type":"md5",  "orient": 180,  "transparent": false,  "collision": {"type":"circle","radius":1.6},  "scale":0.5},

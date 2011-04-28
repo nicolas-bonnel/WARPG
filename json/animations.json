@@ -35,8 +35,8 @@
   "disapear": {"firstFrame":0,"lastFrame":5,"speed":5.0}
 },
 { 
-  "modelName": "trader",
-  "idle": {"firstFrame":0,"lastFrame":5,"speed":5.0},
+  "modelName": "clintbellanger",
+  "idle": {"firstFrame":0,"lastFrame":6,"speed":5.0},
   "walkF": {"firstFrame":0,"lastFrame":5,"speed":5.0},
   "walkB": {"firstFrame":0,"lastFrame":5,"speed":5.0},
   "melee": {"firstFrame":0,"lastFrame":5,"speed":5.0},

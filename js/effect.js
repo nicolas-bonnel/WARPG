@@ -30,7 +30,6 @@ function MeleeHit(parent,skill,finishEffects){
 		this.damages.push(dam);
 	}
 	setAptitudeVars(parent);
-	//var damageType = parent[weapon.damageType].level;
 	if(skill.damages)
 		for (var i=0;i<skill.damages.length;i++){
 			var dam = new Object();
@@ -64,10 +63,10 @@ MeleeHit.prototype.process=function(elapsed){
 			if(Math.random()<precision/(precision+objsHit[i]['dexterity'].level)){
 				objsHit[i].damage(this.damages);
 				for (var j=0;j<this.finishEffects.length;j++)
-					world.particles.push(new ParticleEmiter(objsHit[i],this.finishEffects[j]));
+					world.particles.push(new ParticleEmitter(objsHit[i],this.finishEffects[j]));
 			}else{
 				objsHit[i].xpAptitude('dexterity',1);
-				world.particles.push(new ParticleEmiter(objsHit[i],'miss'));
+				world.particles.push(new ParticleEmitter(objsHit[i],'miss'));
 			}
 		}
 }
@@ -192,7 +191,7 @@ RandomHit.prototype.process=function(elapsed){
 		var ind = Math.floor(rand()*objs.length);
 		objs[ind].damage(this.damages);
 		for (var j=0;j<this.finishEffects.length;j++)
-			world.particles.push(new ParticleEmiter(objs[ind],this.finishEffects[j].particle));
+			world.particles.push(new ParticleEmitter(objs[ind],this.finishEffects[j].particle));
 	}
 }
 
@@ -215,7 +214,7 @@ function createNumber(obj,num){
 		spell.x = obj.x+Math.cos(theta)*(numNum/2.0-i-0.5)*0.4;
 		spell.y = obj.y+Math.sin(theta)*(numNum/2.0-i-0.5)*0.4;
 		spell.z = obj.z;
-		part = new ParticleEmiter(spell,'num'+(numb%10));
+		part = new ParticleEmitter(spell,'num'+(numb%10));
 		numb = Math.floor(numb / 10);
 		world.particles.push(part);
 	}

@@ -41,7 +41,7 @@ function Action(parent,skill){
 		if(skill.lifeEffects[i]=='disapear')
 			this.lifeEffects.push(new Disapear(parent));
 		else if(skill.lifeEffects[i].particle)
-			this.lifeEffects.push(new ParticleEmiter(parent,skill.lifeEffects[i].particle));
+			this.lifeEffects.push(new ParticleEmitter(parent,skill.lifeEffects[i].particle));
 	}
 	for (var i=0;i<skill.finishEffects.length;i++){
 		if(skill.finishEffects[i].MeleeHit)
@@ -54,7 +54,7 @@ function Action(parent,skill){
 
 function skillDescription(sk){
 	setAptitudeVars(world.player);
-	var descrip ='<div class="description" style=left:'+mouseX+';top:'+mouseY+';><font color="#AAFFAA">'+ skills[sk].name +'</font><br>'+skills[sk].description+'<br>Cost:';
+	var descrip ='<div class="description" style=left:'+(mouseX+2)+';top:'+(mouseY+2)+';><font color="#AAFFAA">'+ skills[sk].name +'</font><br>'+skills[sk].description+'<br>Cost:';
 	if(eval(skills[sk].cost[0])>0)
 		descrip += ' <font color="#FF7777">'+eval(skills[sk].cost[0])+' HP</font>';
 	if(eval(skills[sk].cost[1])>0)

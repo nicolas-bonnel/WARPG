@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see (http://www.gnu.org/licenses/).
  *
  * Some parts of this program were inspired from this site : http://learningwebgl.com/blog/
  *
@@ -27,6 +27,46 @@ Triggers :
 
 */
 
+var questGrammar = {};
+
+questGrammar['(quest)'] = ['(knowledge)','(comfort)','(reputation)','(serenity)','(protection)','(conquest)','(wealth)','(ability)','(equipment)'];
+questGrammar['(knowledge)'] = ['(get) (goto) give',/*'(spy)',*/'(goto) listen (goto) report','(get) (goto) use (goto) give'];
+questGrammar['(comfort)'] = ['(get) (goto) give'/*,'(goto) damage (goto) report'*/];
+questGrammar['(reputation)'] = ['(get) (goto) give', '(goto) (kill) (goto) report','(goto) (goto) report'];
+questGrammar['(serenity)'] = [/*'(goto) damage',*/'(get) (goto) use (goto) give',/*'(get) (goto) use capture (goto) give',*/'(goto) listen (goto) report','(goto) take (goto) give','(get) (goto) give'/*,'(goto) damage escort (goto) report'*/];
+questGrammar['(protection)'] = [/*'(goto) damage (goto) report',*/'(get) (goto) use',/*'(goto) repair',*/'(get) (goto) use'/*,'(goto) damage','(goto) repair','(goto) defend'*/];
+questGrammar['(conquest)'] = [/*'(goto) damage',*/'(goto) (steal) (goto) give'];
+questGrammar['(wealth)'] = ['(goto) (get)','(goto) (steal)','repair'];
+questGrammar['(ability)'] = ['repair use','(get) use','use',/*'damage',*/'use','(get) use','(get) experiment'];
+questGrammar['(equipment)'] = ['repair','(get) (goto) give','(steal)','(goto) exchange'];
+
+
+questGrammar['(subquest)'] = ['(goto)','(goto) (quest) (goto)'];
+questGrammar['(goto)'] = ['','explore','(learn) goto'];
+questGrammar['(learn)'] = ['','(goto) (subquest) listen','(goto) (get) read','(get) (subquest) give listen'];
+questGrammar['(get)'] = ['','(steal)','(goto) gather','(goto) (get) (goto) (subquest) exchange'];
+questGrammar['(steal)'] = [/*'(goto) stealth take',*/'(goto) (kill) take'];
+//questGrammar['(spy)'] = ['(goto) spy (goto) report'];
+//questGrammar['(capture)'] = ['(get) (goto) capture'];
+questGrammar['(kill)'] = ['(goto) kill'];
+
+function expandQuest(quest){
+	var newQuest = '';
+	var spli = quest.split(' ');
+	for (var i=0;i<spli.length;i++){
+		var rule = questGrammar[spli[i]];
+		var ru;
+		if(rule)
+			ru = rule[Math.floor(rand()*rule.length)];
+		else
+			ru = spli[i];
+		newQuest += ru
+		if(i<spli.length-1 && ru.length>0)
+			newQuest += ' ';
+	}
+	return newQuest;
+}
+/*
 function State(goal,target){
 	this.goal = goal;
 	this.target = target;
@@ -37,7 +77,7 @@ State.prototype.process = funtion(goal, target){
 		if (this.goal=='talk'){
 			return (this.target==target);
 		}else if (this.goal=='kill'){
-			if (this.target.currentHp<=0.0)
+			if (this.target.currentHp(=0.0)
 				return true;
 		}else if(this.goal=='collect'){
 			this.target.name==target.name)
@@ -49,4 +89,4 @@ function Quest(states){
 	this.currentState = 0;
 	this.states = states;	
 
-}
+}*/

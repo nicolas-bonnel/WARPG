@@ -107,7 +107,7 @@ function Character(jsonFile,x,y,level){
 			}
 		}
 	if (jsonFile.particle)
-		world.particles.push(new ParticleEmiter(this,jsonFile.particle));
+		world.particles.push(new ParticleEmitter(this,jsonFile.particle));
 	this.properties = jsonFile;
 	this.level = level;
 	this.levelXP = 10;
@@ -215,6 +215,7 @@ Character.prototype.damage = function(dmgs){
 	this.currentHp -= damages;
 	this.currentAction.isInterruptible = true;
 	if(this.currentHp<=0.0){
+		world.events.push(['dead',this]);
 		this.currentHp = 0;
 		this.setAction(skills['die']);
 		if(this != world.player)
@@ -222,7 +223,7 @@ Character.prototype.damage = function(dmgs){
 		this.circleHealth = null;
 	}else
 		this.setAction(skills['hit']);
-	world.particles.push(new ParticleEmiter(this,'blood'));
+	world.particles.push(new ParticleEmitter(this,'blood'));
 	createNumber(this,Math.floor(damages));
 }
 
