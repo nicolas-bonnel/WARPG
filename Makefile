@@ -4,7 +4,8 @@ srcdir = js/
 all: warpg-dev.js warpg.js
 
 # Create the list of modules
-modules =   ${srcdir}area.js\
+modules =   ${srcdir}utils.js\
+	    ${srcdir}area.js\
             ${srcdir}character.js\
             ${srcdir}collision.js\
             ${srcdir}effect.js\
