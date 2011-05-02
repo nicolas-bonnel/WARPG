@@ -152,7 +152,7 @@ function loot(level,qual){
 	else
 		quality = 'normal';
 	var it = new Item(items[itemNames[Math.floor(rand()*itemNames.length)]],quality,level);
-	it.pickable = new ParticleEmiter(it,'itemdrop');
+	it.pickable = new ParticleEmitter(it,'itemdrop');
 	world.particles.push(it.pickable);
 	return it;
 }
