@@ -47,7 +47,7 @@ AI.prototype.process = function(){
 			}else{
 				this.parent.speed = 0;
 				if(world.player.currentHp>0)
-					this.parent.setAction(skills['Melee attack']);
+					this.parent.setAction(skills[this.parent.properties.skills[0]]); // random here ?
 				else
 					this.parent.setAction(skills['idle']);
 			}

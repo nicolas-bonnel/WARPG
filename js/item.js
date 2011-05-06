@@ -38,6 +38,8 @@ function Item(jsonItem,quality,itemLevel){
 	item.name = jsonItem.name;
 	item.type = jsonItem.type;
 	item.requirements = jsonItem.requirements;
+	if(jsonItem.resists)
+		item.resists = jsonItem.resists;
 	if(item.type=='weapon'){
 		item.damageType = jsonItem.damageType;
 		item.damages = jsonItem.damages;
@@ -130,6 +132,12 @@ function itemDescription(item){
 			descrip += item.powers[x].effect.damageType+ ' damage<br>';
 		else if (item.powers[x].effect.type == 'bonus')
 			descrip += item.powers[x].effect.aptitude+'<br>';
+	}
+	if(item.resists){
+		descrip += 'Resists : ';
+		for (var x in item.resists)
+			descrip += x+' : '+item.resists[x]+' %, ';
+		descrip = descrip.substring(0,descrip.length-2)+'<br>';
 	}
 	if (item.goldCost>0)
 		descrip += '<font color="#EEEEAA">Price: '+item.goldCost+' gold.</font>';

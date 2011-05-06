@@ -134,10 +134,14 @@ function handleKeys() {
      		world.player.orient -=90*elapsed;
 
 	if (currentlyPressedKeys[keyMap['attack']])
-		if (world.player.equipment['weapon'].item)
-  			world.player.setAction(skills['Melee attack']);//attack
-		else
+		if (!world.player.equipment['weapon'].item)
 			world.player.setAction(skills['Punch']);//attack
+		else if (world.player.equipment['weapon'].item.damageType=='slash')
+			world.player.setAction(skills['Slashing attack']);//attack
+		else if (world.player.equipment['weapon'].item.damageType=='pierce')
+			world.player.setAction(skills['Piercing attack']);//attack
+		else if (world.player.equipment['weapon'].item.damageType=='blunt')
+			world.player.setAction(skills['Blunt attack']);//attack
 
 	if (currentlyPressedKeys[keyMap['aptitude']])
   		showTab('aptitude');

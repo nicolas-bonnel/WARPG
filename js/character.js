@@ -68,8 +68,8 @@ function Character(jsonFile,x,y,level){
 			dam.id = 'base';
 			this.damages[jsonFile.damages[i].type].push(dam);
 		}
-		this.range = jsonFile.range;
-	}	
+	}
+	this.range = jsonFile.range;
 	for (var res in jsonFile.resists)
 		this.resists[res] = eval(jsonFile.resists[res]);
 
@@ -255,6 +255,12 @@ Character.prototype.addEquipment = function(item){
 		if (this == world.player)
 			$('#'+item.damageType+'Dmg').html(minDamage(this.damages[item.damageType])+' - '+maxDamage(this.damages[item.damageType]));
 	}
+	if(item.resists)
+		for (var x in item.resists){
+			this.resists[x] += item.resists[x];
+			if (this == world.player)
+				$('#'+x+'Res').html(this.resists[x]+' %');
+		}
 	for (var x in item.powers){
 		if (item.powers[x].effect.type == 'damage'){
 			var type = item.powers[x].effect.damageType;
@@ -311,17 +317,26 @@ Character.prototype.removeEquipment = function(type){
 			$('#'+item.damageType+'Dmg').html(minDamage(this.damages[item.damageType])+' - '+maxDamage(this.damages[item.damageType]));
 		this.range = this.properties.range;
 	}
+	if(item.resists)
+		for (var x in item.resists){
+			this.resists[x] -= item.resists[x];
+			if (this == world.player)
+				$('#'+x+'Res').html(this.resists[x]+' %');
+		}
 }
 
 
 Character.prototype.setAction = function(skill){
 	if(this.nextAction.type != skill.action && this.nextAction.type != 'die' && this.nextAction.type != 'opened' && this.nextAction.type != 'disapear' && this.nextAction.type != 'hit'){
 		setAptitudeVars(this);
+		if(this != world.player || !skill.requirement || eval(skill.requirement)){
 		//debug(this.nextAction.type+','+skill.action);
-		if(eval(skill.cost[1])<=this.currentSp && eval(skill.cost[2])<=this.currentMp)		
-			this.nextAction = new Action(this,skill);
-		if(this.nextAction.type=='idle' || this.nextAction.type== 'walkF'|| this.nextAction.type== 'walkB')
-			this.nextAction.isInterruptible = true;
+			if(eval(skill.cost[1])<=this.currentSp && eval(skill.cost[2])<=this.currentMp)		
+				this.nextAction = new Action(this,skill);
+			if(this.nextAction.type=='idle' || this.nextAction.type== 'walkF'|| this.nextAction.type== 'walkB')
+				this.nextAction.isInterruptible = true;
+		}else
+			debug('Cannot use skill : '+skill.name);
 	}
 }
 
@@ -408,7 +423,7 @@ Character.prototype.animate = function(elapsed){
 			}else if(this.currentAction.type =='open'){
 				this.nextAction = new Action(this,skills['opened']);
 				for (var i=0;i<10;i++){
-					var drop = loot(this.level+2,rand()/5.0);
+					var drop = loot(this.level+1,rand()/5.0);
 					//debug(this.level+1);
 					var theta = (models[this.modelName].orient+this.orient)*Math.PI/180.0;
 					drop.x = this.x+Math.sin(theta);

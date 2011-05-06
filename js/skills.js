@@ -61,14 +61,14 @@ function skillDescription(sk){
 		descrip += ' <font color="#FFFF77">'+eval(skills[sk].cost[1])+' SP</font>';
 	if(eval(skills[sk].cost[2])>0)
 		descrip += ' <font color="#7777FF">'+eval(skills[sk].cost[2])+' MP</font>';
-	if (skills[sk].damages || skills[sk].damagesModifier){
+	if ((!skills[sk].requirement || eval(skills[sk].requirement) )&& (skills[sk].damages || skills[sk].damagesModifier)){
 		descrip += '<br>Damages :<br>';
 		var damages = {};
 		if(skills[sk].damages)
 			for (var type in skills[sk].damages){
 				var dam = new Object();
-				dam.minValue = eval(skills[sk].damages[type]);
-				dam.maxValue = dam.minValue;
+				dam.minValue = eval(skills[sk].damages[type].value)*(1-skills[sk].damages[type].range);
+				dam.maxValue = eval(skills[sk].damages[type].value)*(1+skills[sk].damages[type].range);
 				damages[type] = dam;
 			}
 		for (var type in skills[sk].damagesModifier){
@@ -82,7 +82,8 @@ function skillDescription(sk){
 			dam.maxValue += maxDamage(world.player.damages[type])*eval(skills[sk].damagesModifier[type]);	
 		}
 		for (type in damages)
-			descrip += type+' : '+Math.round(damages[type].minValue*10)/10+' - '+Math.round(damages[type].maxValue*10)/10+'<br>';
+			if(damages[type].minValue>0)
+				descrip += type+' : '+Math.round(damages[type].minValue*10)/10+' - '+Math.round(damages[type].maxValue*10)/10+'<br>';
 	}
 
 	//if (minDmg>0)

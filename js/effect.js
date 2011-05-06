@@ -27,13 +27,12 @@ function MeleeHit(parent,skill,finishEffects){
 		for (var type in skill.damages){
 			var dam = new Object();
 			dam.type = type;
-			dam.value = eval(skill.damages[type]);
+			dam.value = eval(skill.damages[type].value)*(1-skill.damages[type].range);
 			this.damages.push(dam);
 		}
 	for (var type in skill.damagesModifier){
-		debug(type);
 		var dam = new Object();
-		dam.type = skill.damagesModifier;
+		dam.type = type;
 		dam.value = ranDamage(parent.damages[type])*eval(skill.damagesModifier[type]);	
 		this.damages.push(dam);
 	}
@@ -50,8 +49,7 @@ MeleeHit.prototype.process=function(elapsed){
 		var range = this.parent.collision.radius*1.2;
 	else
 		var range = 1.0;
-	range += this.parent.currentRange;
-	var melee = this.parent.melee.level;
+	range += this.parent.range;
 	var cx = this.parent.x+Math.sin(theta)*range;
 	var cy = this.parent.y-Math.cos(theta)*range;
 	var objsHit = this.parent.getCollisions(cx,cy);
