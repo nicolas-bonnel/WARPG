@@ -322,9 +322,9 @@ World.prototype.draw = function(elapsed){
 		elapsed = 0;
 	if (this.player){
 		if(this.player.currentHp>=0){
-			document.getElementById("hp").innerHTML = 'HP : '+Math.ceil(10*this.player.currentHp)/10+'/'+this.player.maxHp;
-			document.getElementById("sp").innerHTML = 'SP : '+Math.floor(10*this.player.currentSp)/10+'/'+this.player.maxSp;
-			document.getElementById("mp").innerHTML = 'MP : '+Math.floor(10*this.player.currentMp)/10+'/'+this.player.maxMp;
+			$('#hp').html('HP : '+Math.ceil(10*this.player.currentHp)/10+'/'+Math.round(10*this.player.maxHp)/10);
+			$('#sp').html('SP : '+Math.floor(10*this.player.currentSp)/10+'/'+Math.round(10*this.player.maxSp)/10);
+			$('#mp').html('MP : '+Math.floor(10*this.player.currentMp)/10+'/'+Math.round(10*this.player.maxMp)/10);
 			document.getElementById("imHp").width = (150*this.player.currentHp/this.player.maxHp);
 			document.getElementById("imSp").width = (150*this.player.currentSp/this.player.maxSp);
 			document.getElementById("imMp").width = (150*this.player.currentMp/this.player.maxMp);

@@ -17,38 +17,21 @@
  *
  */
 
-var xpInc = 2;
-
 function Character(jsonFile,x,y,level){
-	this['constitution'] = new Object();
-	this['strength'] = new Object();
-	this['intelligence'] = new Object();
-	this['dexterity'] = new Object();
-	this['melee'] = new Object();
-	this['ranged'] = new Object();
-	this['cast'] = new Object();
-	this['run'] = new Object();
-	this['block'] = new Object();
-	this['enchant'] = new Object();
-	this['hex'] = new Object();
-	this['traps'] = new Object();
-	this['stealth'] = new Object();
-	this['slash'] = new Object();
-	this['pierce'] = new Object();
-	this['blunt'] = new Object();
-	this['shield'] = new Object();
-	this['fire'] = new Object();
-	this['water'] = new Object();
-	this['earth'] = new Object();
-	this['air'] = new Object();
-	this['light'] = new Object();
-	this['dark'] = new Object();
-	this['aoe'] = new Object();
-	this['dot'] = new Object();
-	for (skill in this){
-		this[skill].level = 1;
-		this[skill].xp = 0;
+	for (var i in aptiNames){
+		this[aptiNames[i]] = {};
+		this[aptiNames[i]].level = 1;
+		this[aptiNames[i]].xp = 0;
 	}
+	this.effects = [];
+	if (jsonFile.particle){
+		var eff = new ParticleEmitter(this,jsonFile.particle);
+		world.particles.push(eff);
+		this.effects.push(eff);
+	}
+	this.properties = jsonFile;
+	this.level = level;
+	this.levelXP = 10;
 	for (var i=0;i<jsonFile.aptitudes.length;i++)
 		this[jsonFile.aptitudes[i].aptitude].level = eval(jsonFile.aptitudes[i].level);
 	this.scale = eval(jsonFile.scale);
@@ -64,32 +47,40 @@ function Character(jsonFile,x,y,level){
 	this.currentMp = this.maxMp;
 	this.currentSp = this.maxSp;
 	this.faction = jsonFile.faction;
-	this.inventory = {};
-	this.equipment = {};
-	if(jsonFile.equipmentModif)
-		for (var i=0;i<jsonFile.equipmentModif.length;i++)
-			this.equipment[jsonFile.equipmentModif[i].type]= jsonFile.equipmentModif[i];
 
 	if(models[this.modelName].collision.type=='circle')
 		this.collision = new CircleCollision(this,models[this.modelName].collision.radius*this.scale);
 	else if(models[this.modelName].collision.type=='rect')
 		this.collision = new RectCollision(this,models[this.modelName].collision.collisionW*this.scale,models[this.modelName].collision.collisionH*this.scale);
-	this.baseDamages = [];
-	this.currentDamages = [];
+		
+	// damages and resists
+	this.damages = {};
+	this.resists = {};
+	for (var i in damageNames){
+		this.damages[damageNames[i]] = [];
+		this.resists[damageNames[i]] = 0.0;
+	}
 	if (jsonFile.damages){
-		for (var i=0;i<jsonFile.damages.length;i++){
+		for (var i in jsonFile.damages){
 			var dam = {};
 			dam.value = eval(jsonFile.damages[i].value);
 			dam.range = jsonFile.damages[i].range;
-			dam.type = jsonFile.damages[i].damageType;
 			dam.id = 'base';
-			this.baseDamages.push(dam);
-			this.currentDamages.push(dam);
-			//debug(this.modelName +', level '+level+', dmg : '+this.baseDamages[i].value);
+			this.damages[jsonFile.damages[i].type].push(dam);
 		}
-		this.baseRange = jsonFile.range;
-		this.currentRange = this.baseRange;
-	}
+		this.range = jsonFile.range;
+	}	
+	for (var res in jsonFile.resists)
+		this.resists[res] = eval(jsonFile.resists[res]);
+
+	// inventory and equipment
+	this.inventory = {};
+	this.equipment = {};
+	for(var i in equipSlots)
+		this.equipment[equipSlots[i]] = {};
+	if(jsonFile.equipmentModif)
+		for (var i=0;i<jsonFile.equipmentModif.length;i++)
+			this.equipment[jsonFile.equipmentModif[i].type] = jsonFile.equipmentModif[i];
 	for(var i=0;i<jsonFile.gear.length;i++)
 		if(jsonFile.gear[i].weapon){
 			var it = new Item(items[jsonFile.gear[i].weapon],'normal',level);
@@ -106,11 +97,8 @@ function Character(jsonFile,x,y,level){
 				$('#rightgear div').eq(3).append(getIcon(it));
 			}
 		}
-	if (jsonFile.particle)
-		world.particles.push(new ParticleEmitter(this,jsonFile.particle));
-	this.properties = jsonFile;
-	this.level = level;
-	this.levelXP = 10;
+
+	// Actions and animation
 	this.currentAction = new Action(this,skills['idle']);
 	this.currentAction.isInterruptible = true;
 	this.nextAction = this.currentAction;
@@ -119,12 +107,22 @@ function Character(jsonFile,x,y,level){
 	this.posFrame = 0.0;
 }
 
+/*
+ Give back health, stamina, and mana. Used for potions and healing spells.
+ @ hp : amount of health restored
+ @ sp : amount of stamina restored
+ @ mp : amount of mana restored
+*/
 Character.prototype.recover = function(hp,sp,mp){
 	this.currentHp = Math.min(this.currentHp+hp,this.maxHp);
 	this.currentSp = Math.min(this.currentSp+sp,this.maxSp);
 	this.currentMp = Math.min(this.currentMp+mp,this.maxMp);
 }
 
+/*
+ Update this character status according to elapsed time. Regenerate, move, process ai and effects.
+ @ elapsed : amount of time elapsed in seconds since last update.
+*/
 Character.prototype.update = function(elapsed){
 	if (this.currentHp<this.maxHp && this.currentHp>0.0){
 		var inc = (this.constitution.level+4)*(elapsed/25.0);
@@ -151,8 +149,7 @@ Character.prototype.update = function(elapsed){
 			this.collision = null;
 		this.circleHealth = null;
 	}
-	var h =  world.getH(this.x,this.y);
-	this.z += (h-this.z)/4.0;
+	this.z =  world.getH(this.x,this.y);
 	if(this.ai)
 		this.ai.process();
 	if (this.currentAction.type.substring(0,4)=='walk')
@@ -162,6 +159,9 @@ Character.prototype.update = function(elapsed){
 			this.currentAction.lifeEffects[i].process(elapsed);
 }
 
+/*
+ Draw this character and its child elements (items, health)
+*/
 Character.prototype.draw = function (){
 	mvPushMatrix();
 	mat4.translate(mvMatrix,[this.x, this.y,this.z]);
@@ -171,10 +171,9 @@ Character.prototype.draw = function (){
 		mat4.rotate(mvMatrix, degToRad(this.orient), [0, 0, 1]);
 	if(this.scale)
 		mat4.scale(mvMatrix,[this.scale,this.scale,this.scale]);
-	// TODO Childs collection
-	for (equip in this.equipment)
-		if (this.equipment[equip].bone && this.equipment[equip].item)
-			this.equipment[equip].item.draw();
+	for (var i in this.equipment)
+		if (this.equipment[i].bone && this.equipment[i].item)
+			this.equipment[i].item.draw();
 	if(this.circleHealth)
 		this.circleHealth.draw();
 	if(this.mesh)
@@ -184,78 +183,88 @@ Character.prototype.draw = function (){
 	mvPopMatrix();	
 }
 
-
-Character.prototype.xpAptitude=function(skill,xp){
+/*
+ Give experience to aptitudes used by the player.
+ @ apti : the name of the aptitude to give exterience to
+ @ xp : the amount of experience to give
+*/
+Character.prototype.xpAptitude=function(apti,xp){
 	if(this == world.player){
-		this[skill].xp += xp;
-		if(this[skill].xp>=this.levelXP){
-			this[skill].xp -= this.levelXP;
-			this[skill].level += 1;
+		this[apti].xp += xp;
+		if(this[apti].xp>=this.levelXP){
+			this[apti].xp -= this.levelXP;
+			this[apti].level += 1;
 			this.levelXP += xpInc;
 			this.level += 0.1;
-			document.getElementById(skill+'LVL').innerHTML = this[skill].level;
+			document.getElementById(apti+'LVL').innerHTML = this[apti].level;
 			document.getElementById('playerLevel').innerHTML = Math.floor(this.level);
 			document.getElementById('playerLevelXP').innerHTML = this.levelXP;
-			if(skill=='constitution')
+			if(apti=='constitution')
 				this.maxHp += 2;
-			else if (skill=='strength')
+			else if (apti=='strength')
 				this.maxSp += 2;
-			else if (skill=='intelligence')
+			else if (apti=='intelligence')
 				this.maxMp += 2;
 		}
-		document.getElementById(skill+'XP').innerHTML = Math.floor(this[skill].xp);
+		document.getElementById(apti+'XP').innerHTML = Math.floor(this[apti].xp);
 	}
 }
 
+/*
+ Damage this character. If the character takes more than 10% of its maximum amount of health points, it enters in recovery mode (cancels current action).
+ @ dmgs : an array of damage objects (value, type)
+*/
 Character.prototype.damage = function(dmgs){
 	var damages = 0.0;
 	for (var j=0;j<dmgs.length;j++){
-		damages += dmgs[j].value;
+		damages += dmgs[j].value*(1-this.resists[dmgs[j].type]/100.0);
 	}
 	this.currentHp -= damages;
-	this.currentAction.isInterruptible = true;
 	if(this.currentHp<=0.0){
 		world.events.push(['dead',this]);
 		this.currentHp = 0;
+		this.currentAction.isInterruptible = true;
 		this.setAction(skills['die']);
-		if(this != world.player)
+		if(this != world.player){
 			this.collision = null;
-		this.circleHealth = null;
-	}else
+			this.circleHealth = null;
+			for (var i in this.effects)
+				this.effects[i].finalize();
+		}
+	}else if (damages>this.maxHp/10.0){
+		this.currentAction.isInterruptible = true;
 		this.setAction(skills['hit']);
+	}
 	world.particles.push(new ParticleEmitter(this,'blood'));
 	createNumber(this,Math.floor(damages));
 }
 
 
 Character.prototype.addEquipment = function(item){
-	if (!this.equipment[item.type])
-		this.equipment[item.type] = {};
-	else if(this.equipment[item.type].item)
+	if(this.equipment[item.type].item)
 		this.removeEquipment(item.type);
 	this.equipment[item.type].item = item;
 	item.parentModif = this.equipment[item.type];
 	if(item.type=='weapon'){
-		for(var i=0;i<this.currentDamages.length;i++)
-			if(this.currentDamages[i].id == 'base') {
-				this.currentDamages.splice(i, 1);
-			}
 		var dam = {};
 		dam.value = item.damages;
 		dam.range = item.damageRange;
-		dam.type = item.damageType;
 		dam.id = item.id;
-		this.currentDamages.push(dam);
-		this.currentRange = item.range;
+		this.damages[item.damageType].push(dam);
+		this.range = item.range;
+		if (this == world.player)
+			$('#'+item.damageType+'Dmg').html(minDamage(this.damages[item.damageType])+' - '+maxDamage(this.damages[item.damageType]));
 	}
 	for (var x in item.powers){
 		if (item.powers[x].effect.type == 'damage'){
+			var type = item.powers[x].effect.damageType;
 			var dam = {};
 			dam.value = item.powers[x].effect.value;
 			dam.range = 0;
 			dam.id = item.id;
-			dam.type =  item.powers[x].effect.damageType;
-			this.currentDamages.push(dam);
+			this.damages[type].push(dam);
+			if (this == world.player)
+				$('#'+type+'Dmg').html(minDamage(this.damages[type])+' - '+maxDamage(this.damages[type]));
 		}else if (item.powers[x].effect.type == 'bonus'){
 			if (item.powers[x].effect.aptitude == 'hp')
 				this.maxHp += item.powers[x].effect.value;
@@ -271,11 +280,14 @@ Character.prototype.removeEquipment = function(type){
 	var item = this.equipment[type].item;
 	for (var x in item.powers){
 		if (item.powers[x].effect.type == 'damage'){
-			for(var i=0;i<this.currentDamages.length;i++)
-				if(this.currentDamages[i].id == item.id) {
-					this.currentDamages.splice(i, 1);
+			var typeD = item.powers[x].effect.damageType;
+			for(var i in this.damages[typeD])
+				if(this.damages[typeD][i].id == item.id) {
+					this.damages[typeD].splice(i, 1);
 					break;
 				}
+			if (this == world.player)
+				$('#'+typeD+'Dmg').html(minDamage(this.damages[typeD])+' - '+maxDamage(this.damages[typeD]));
 		}else if (item.powers[x].effect.type == 'bonus'){
 			if (item.powers[x].effect.aptitude == 'hp'){
 				this.maxHp -= item.powers[x].effect.value;
@@ -291,13 +303,13 @@ Character.prototype.removeEquipment = function(type){
 	}
 	this.equipment[type].item = null;
 	if(type=='weapon'){
-		for(var i=0;i<this.currentDamages.length;i++)
-			if(this.currentDamages[i].id == item.id) {
-				this.currentDamages.splice(i, 1);
+		for(var i in this.damages[item.damageType])
+			if(this.damages[item.damageType][i].id == item.id) {
+				this.damages[item.damageType].splice(i, 1);
 			}
-		for(var i=0;i<this.baseDamages.length;i++)
-			this.currentDamages.push(this.baseDamages[i]);
-		this.currentRange = this.baseRange;
+		if (this == world.player)
+			$('#'+item.damageType+'Dmg').html(minDamage(this.damages[item.damageType])+' - '+maxDamage(this.damages[item.damageType]));
+		this.range = this.properties.range;
 	}
 }
 
@@ -395,13 +407,15 @@ Character.prototype.animate = function(elapsed){
 				}
 			}else if(this.currentAction.type =='open'){
 				this.nextAction = new Action(this,skills['opened']);
-				var drop = loot(this.level+1,rand()/5.0);
-				//debug(this.level+1);
-				var theta = (models[this.modelName].orient+this.orient)*Math.PI/180.0;
-				drop.x = this.x+Math.sin(theta);
-				drop.y = this.y-Math.cos(theta);
-				drop.z = this.z;
-				world.addObj(drop);
+				for (var i=0;i<10;i++){
+					var drop = loot(this.level+2,rand()/5.0);
+					//debug(this.level+1);
+					var theta = (models[this.modelName].orient+this.orient)*Math.PI/180.0;
+					drop.x = this.x+Math.sin(theta);
+					drop.y = this.y-Math.cos(theta);
+					drop.z = this.z;
+					world.addObj(drop);
+				}
 			}
 			else if (this.currentAction.type =='hit'){
 				this.nextAction = new Action(this,skills['idle']);

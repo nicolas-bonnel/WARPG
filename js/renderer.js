@@ -40,7 +40,7 @@ keyMap['strafeRight'] = 82; // r
 keyMap['backward'] = 68; // d
 keyMap['turnLeft'] = 83; // s
 keyMap['turnRight'] = 70; // f
-keyMap['skill'] = 84; // t
+keyMap['attack'] = 84; // t
 
 function initGL(canvas) {
 	try {
@@ -133,8 +133,11 @@ function handleKeys() {
 	else if (currentlyPressedKeys[keyMap['turnRight']])
      		world.player.orient -=90*elapsed;
 
-	if (currentlyPressedKeys[keyMap['skill']])
-  		world.player.setAction(skills['Melee attack']);//attack
+	if (currentlyPressedKeys[keyMap['attack']])
+		if (world.player.equipment['weapon'].item)
+  			world.player.setAction(skills['Melee attack']);//attack
+		else
+			world.player.setAction(skills['Punch']);//attack
 
 	if (currentlyPressedKeys[keyMap['aptitude']])
   		showTab('aptitude');

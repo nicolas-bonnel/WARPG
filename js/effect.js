@@ -22,22 +22,21 @@ function MeleeHit(parent,skill,finishEffects){
 	this.finishEffects = finishEffects;
 	this.skill = skill;
 	this.damages = [];
-	for (var i=0;i<parent.currentDamages.length;i++){
-		var dam = new Object();
-		dam.type = parent.currentDamages[i].type;
-		dam.value = parent.currentDamages[i].value*eval(skill.damagesModifier);
-		dam.value = dam.value + dam.value*(1.0-2.0*rand())*eval(parent.currentDamages[i].range);
-		this.damages.push(dam);
-	}
 	setAptitudeVars(parent);
 	if(skill.damages)
-		for (var i=0;i<skill.damages.length;i++){
+		for (var type in skill.damages){
 			var dam = new Object();
-			dam.type = skill.damages[i].type;
-			dam.value = eval(skill.damages[i].value);
-			dam.value = dam.value + dam.value*(1.0-2.0*rand())*eval(skill.damages[i].range);
+			dam.type = type;
+			dam.value = eval(skill.damages[type]);
 			this.damages.push(dam);
 		}
+	for (var type in skill.damagesModifier){
+		debug(type);
+		var dam = new Object();
+		dam.type = skill.damagesModifier;
+		dam.value = ranDamage(parent.damages[type])*eval(skill.damagesModifier[type]);	
+		this.damages.push(dam);
+	}
 }
 
 //TODO update damages

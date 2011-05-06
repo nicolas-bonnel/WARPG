@@ -1,14 +1,28 @@
 [{ 
+  "name": "Punch",
+  "icon": "sword.png",
+  "level": 1,
+  "cost": ["0","(4.0+melee)/10.0","0"],
+  "target": "ennemy",
+  "precision":"1.0*melee",
+  "damages": {"blunt":"(4.0+melee)/10.0"},
+  "aptitudes": ["melee"], 
+  "action": "melee",
+  "lifeEffects": [],
+  "finishEffects": [{"MeleeHit":[]}],
+  "description":"Basic melee attack."
+}
+,{ 
   "name": "Melee attack",
   "icon": "sword.png",
   "level": 1,
-  "cost": ["0","(9.0+melee)/10.0","0"],
+  "cost": ["0","(8.0+melee+slash)/10.0","0"],
   "target": "ennemy",
   "precision":"1.0*melee",
-  "damagesModifier": "(9.0+melee)/10.0",
-  "aptitudes": ["melee"], 
+  "damagesModifier": {"slash":"(8.0+melee+slash)/10.0"},
+  "aptitudes": ["melee","slash"], 
   "action": "melee",
-  "requirement":"weapon!=null && weapon.range!=null",
+  "requirement":"weapon!=null",
   "lifeEffects": [],
   "finishEffects": [{"MeleeHit":[]}],
   "description":"Basic melee attack."

@@ -22,12 +22,16 @@ var cosinus = Math.cos;
 var sinus = Math.sin;
 var pi = Math.PI;
 
-var melee = 1;
-var cast = 1;
-var fire = 1;
-var air = 1;
-var water = 1;
-var slash = 1;
+var xpInc = 2;
+var aptiNames = ['constitution','strength','intelligence','dexterity','melee','ranged','cast','run','block','enchant','hex','traps','stealth',
+			'slash','pierce','blunt','shield','fire','water','earth','air','light','dark','aoe','dot'];
+
+var damageNames = ['slash','pierce','blunt','fire','water','earth','air'];
+
+var equipSlots = ['weapon','shield','helmet','pauldrons','gloves','pants','boots','armor'];
+
+var melee, constitution, strength, intelligence, dexterity, melee, ranged, cast, run, block, enchant, hex, traps, stealth, slash, pierce, blunt, 		shield, fire, water, earth, air, light, dark, aoe, dot;
+var weapon;
 
 var items = {};
 var models = {};
@@ -45,6 +49,8 @@ var pMatrix = mat4.create();
 
 var mouseX;
 var mouseY;
+
+var DEBUG = true;
 
 function mvPushMatrix() {
 	var copy = mat4.create();
@@ -70,12 +76,30 @@ function degToRad(degrees) {
 }
 
 function setAptitudeVars(creature){
-	melee = creature.melee.level;
-	cast = creature.cast.level;
-	fire = creature.fire.level;
-	air = creature.air.level;
-	water = creature.water.level;
-	slash = creature.slash.level;
+	for (var i in aptiNames)
+		eval(aptiNames[i]+'=creature.'+aptiNames[i]+'.level');
+	weapon = creature.equipment['weapon'].item;
+}
+
+function minDamage(dmgList){
+	var minD = 0.0;
+	for (var i in dmgList)
+		minD += dmgList[i].value*(1-dmgList[i].range);
+	return Math.round(10*minD)/10;
+}
+
+function maxDamage(dmgList){
+	var maxD = 0.0;
+	for (var i in dmgList)
+		maxD += dmgList[i].value*(1+dmgList[i].range);
+	return Math.round(10*maxD)/10;
+}
+
+function ranDamage(dmgList){
+	var ranD = 0.0;
+	for (var i in dmgList)
+		ranD += dmgList[i].value*(1+(1.0-2.0*rand())*dmgList[i].range);
+	return ranD;
 }
 
 function randomPosInRect(w,h){
@@ -94,65 +118,9 @@ function randomPosInCircle(r){
 	return ret;
 }
 
-var DEBUG = true;
-
-function info(msg){
-	var m = document.createElement("div");
-	m.innerHTML = "[INFO] " +msg;
-	document.getElementById("console").appendChild(m);
-}
-
-function debug(msg){
-	if(DEBUG){
-		var m = document.createElement("div");
-		m.innerHTML = "[DEBUG] " +msg;
-		document.getElementById("console").appendChild(m);
-	}
-}
-
-function warning(msg){
-	var m = document.createElement("div");
-	m.innerHTML = "[WARNING] " +msg;
-	document.getElementById("console").appendChild(m);
-}
-
-function error(msg){
-	var m = document.createElement("div");
-	m.innerHTML = "[ERROR] " +msg;
-	document.getElementById("console").appendChild(m);
-}
-
-function clearConsole(){
-	console = document.getElementById("console");
-	while(console.hasChildNodes())
-		console.removeChild(console.firstChild);
-}
-
-
 function closeTab(tabName){
 	document.getElementById(tabName).style.visibility = 'hidden';
 }
-
-/*
-function dragStart(event) {
-        event.dataTransfer.effectAllowed = 'copy';
-        event.dataTransfer.setData("Text", event.target.getAttribute('id'));
-	return true;
-}
-
-function dragOver(event) {
-	if (event.preventDefault)
-		event.preventDefault(); // allows us to drop
-  	event.dataTransfer.dropEffect = 'copy';
-	return false;
-}
-
-function drop(event) {
-	var element = event.dataTransfer.getData("Text");
-	event.target.appendChild(document.getElementById(element));
-	event.stopPropagation();
-	return false;
-}*/
 
 function dist(o1,o2){
 	return Math.sqrt((o1.x-o2.x)*(o1.x-o2.x)+(o1.y-o2.y)*(o1.y-o2.y));
@@ -247,4 +215,36 @@ function loadObj (modelName,recenter){
 			}
 	}
 	reqMesh.send(null);
+}
+
+function clearConsole(){
+	console = document.getElementById("console");
+	while(console.hasChildNodes())
+		console.removeChild(console.firstChild);
+}
+
+function info(msg){
+	var m = document.createElement("div");
+	m.innerHTML = "[INFO] " +msg;
+	document.getElementById("console").appendChild(m);
+}
+
+function debug(msg){
+	if(DEBUG){
+		var m = document.createElement("div");
+		m.innerHTML = "[DEBUG] " +msg;
+		document.getElementById("console").appendChild(m);
+	}
+}
+
+function warning(msg){
+	var m = document.createElement("div");
+	m.innerHTML = "[WARNING] " +msg;
+	document.getElementById("console").appendChild(m);
+}
+
+function error(msg){
+	var m = document.createElement("div");
+	m.innerHTML = "[ERROR] " +msg;
+	document.getElementById("console").appendChild(m);
 }

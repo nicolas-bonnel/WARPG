@@ -1,3 +1,10 @@
+v 0.06
+- New items : leather armor parts
+- New skill : ice nova
+- Modified the inventory : new picture for the hero and stats displayed (damages and resists) 
+- Added antlion bosses in forests
+- Added a makefile in the project : all js files are now concatened into one file. This makes the gh-pages branch cleaner.
+
 v 0.05 (04/04/2011)
 - New items : weapons, armors parts
 - Items have a quality : normal, magic (1-2 powers), rare (3-4 powers) and epic (5-6 powers)
