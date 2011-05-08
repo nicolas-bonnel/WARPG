@@ -47,10 +47,10 @@ function Projectile(parent,projectiles,skill,i){
 		this.damageInterval = -1;
 	for (var i=0;i<projectiles.lifeDraw.length;i++)
 		if(projectiles.lifeDraw[i].particle) 
-			this.lifeDraw.push(new ParticleEmiter(this,projectiles.lifeDraw[i].particle));
+			this.lifeDraw.push(new ParticleEmitter(this,projectiles.lifeDraw[i].particle));
 	for (var i=0;i<projectiles.finishDraw.length;i++)
 		if(projectiles.finishDraw[i].particle) 
-			this.finishDraw.push(new ParticleEmiter(this,projectiles.finishDraw[i].particle));
+			this.finishDraw.push(new ParticleEmitter(this,projectiles.finishDraw[i].particle));
 	if (projectiles.collisionEffect == 'hit')
 		this.collisionEffect = new ProjectileHit(parent.parent,this,skill);
 	else if (projectiles.collisionEffect == 'line')

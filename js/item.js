@@ -54,7 +54,7 @@ function Item(jsonItem,quality,itemLevel){
 		item.goldCost = 0;
 	if(jsonItem.stackable)
 		item.stackable = jsonItem.stackable;
-	item.id = item.name+(new Date().getTime());
+	item.id = rand()+item.name+rand();
 	if(item.type == 'consumable'){
 		item.quality = 'normal';
 	}else{

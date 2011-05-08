@@ -27,7 +27,7 @@ function MeleeHit(parent,skill,finishEffects){
 		for (var type in skill.damages){
 			var dam = new Object();
 			dam.type = type;
-			dam.value = eval(skill.damages[type].value)*(1-skill.damages[type].range);
+			dam.value = eval(skill.damages[type].value)*(1+(1-2*rand())*skill.damages[type].range);
 			this.damages.push(dam);
 		}
 	for (var type in skill.damagesModifier){
@@ -74,13 +74,18 @@ function LineHit(parent,projectile,skill){
 	this.skill = skill;
 	this.damages = [];
 	setAptitudeVars(parent);
-	for (var i=0;i<skill.damages.length;i++){
+	if(skill.damages)
+		for (var type in skill.damages){
+			var dam = new Object();
+			dam.type = type;
+			dam.value = eval(skill.damages[type].value)*(1+(1-2*rand())*skill.damages[type].range);
+			this.damages.push(dam);
+		}
+	for (var type in skill.damagesModifier){
 		var dam = new Object();
-		dam.type = skill.damages[i].type;
-		dam.value = eval(skill.damages[i].value);
-		if (skill.damages[i].range)
-			dam.value = dam.value + dam.value*(1.0-2.0*rand())*eval(skill.damages[i].range);	
-		this.damages.push(dam)
+		dam.type = type;
+		dam.value = ranDamage(parent.damages[type])*eval(skill.damagesModifier[type]);	
+		this.damages.push(dam);
 	}
 }
 
@@ -110,13 +115,18 @@ function ProjectileHit(parent,projectile,skill){
 	this.skill = skill;
 	this.damages = [];
 	setAptitudeVars(parent);
-	for (var i=0;i<skill.damages.length;i++){
+	if(skill.damages)
+		for (var type in skill.damages){
+			var dam = new Object();
+			dam.type = type;
+			dam.value = eval(skill.damages[type].value)*(1+(1-2*rand())*skill.damages[type].range);
+			this.damages.push(dam);
+		}
+	for (var type in skill.damagesModifier){
 		var dam = new Object();
-		dam.type = skill.damages[i].type;
-		dam.value = eval(skill.damages[i].value);
-		if (skill.damages[i].range)
-			dam.value = dam.value + dam.value*(1.0-2.0*rand())*eval(skill.damages[i].range);	
-		this.damages.push(dam)
+		dam.type = type;
+		dam.value = ranDamage(parent.damages[type])*eval(skill.damagesModifier[type]);	
+		this.damages.push(dam);
 	}
 }
 
@@ -125,9 +135,9 @@ ProjectileHit.prototype.process=function(elapsed){
 	for (var i=0;i<objsHit.length;i++){
 		if (this.skill.target == 'ennemy' && objsHit[i].faction && objsHit[i].faction != this.parent.faction && objsHit[i].currentHp>0){
 			objsHit[i].damage(this.damages);
-			this.projectile.dead = true;
+			this.projectile.dead = !this.projectile.loop;
 		}else if (objsHit[i] != this.parent)
-			this.projectile.dead = true;
+			this.projectile.dead = !this.projectile.loop;
 	}
 }
 
@@ -138,13 +148,18 @@ function Nova(parent,projectile,skill){
 	this.damages = [];
 	setAptitudeVars(parent);
 	this.lifeTime = 0.0;
-	for (var i=0;i<skill.damages.length;i++){
+	if(skill.damages)
+		for (var type in skill.damages){
+			var dam = new Object();
+			dam.type = type;
+			dam.value = eval(skill.damages[type].value)*(1+(1-2*rand())*skill.damages[type].range);
+			this.damages.push(dam);
+		}
+	for (var type in skill.damagesModifier){
 		var dam = new Object();
-		dam.type = skill.damages[i].type;
-		dam.value = eval(skill.damages[i].value);
-		if (skill.damages[i].range)
-			dam.value = dam.value + dam.value*(1.0-2.0*rand())*eval(skill.damages[i].range);	
-		this.damages.push(dam)
+		dam.type = type;
+		dam.value = ranDamage(parent.damages[type])*eval(skill.damagesModifier[type]);	
+		this.damages.push(dam);
 	}
 	this.objsHit = [];
 }
@@ -168,13 +183,18 @@ function RandomHit(parent,projectile,skill,finishEffects){
 	this.skill = skill;
 	this.damages = [];
 	setAptitudeVars(parent);
-	for (var i=0;i<skill.damages.length;i++){
+	if(skill.damages)
+		for (var type in skill.damages){
+			var dam = new Object();
+			dam.type = type;
+			dam.value = eval(skill.damages[type].value)*(1+(1-2*rand())*skill.damages[type].range);
+			this.damages.push(dam);
+		}
+	for (var type in skill.damagesModifier){
 		var dam = new Object();
-		dam.type = skill.damages[i].type;
-		dam.value = eval(skill.damages[i].value);
-		if (skill.damages[i].range)
-			dam.value = dam.value + dam.value*(1.0-2.0*rand())*eval(skill.damages[i].range);	
-		this.damages.push(dam)
+		dam.type = type;
+		dam.value = ranDamage(parent.damages[type])*eval(skill.damagesModifier[type]);	
+		this.damages.push(dam);
 	}
 }
 

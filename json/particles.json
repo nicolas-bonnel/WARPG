@@ -256,6 +256,23 @@
   "speedZ": "0.0",
   "timeOffset":"0.0",
   "amplitude":"1.0"
+},
+{ 
+  "name": "charged bolt",
+  "img": "plasmaball.png",
+  "imgSize":1.0,
+  "numParts": 100,
+  "duration":1.0,
+  "type":"tree",
+  "loop":true,
+  "startX":"0.0",
+  "startY":"0.0",
+  "startZ":"1.0",
+  "speedX":"(0.5-rand())/6.0",
+  "speedY":"(0.5-rand())/6.0",
+  "speedZ": "0.0",
+  "timeOffset":"rand()",
+  "amplitude":"1.0"
 }
 ,
 { 

@@ -7,8 +7,8 @@
   "startX":"0.0",
   "startY":"0.0",
   "startZ":"1.0",
-  "speedX":"15*cosinus(orientation)",
-  "speedY":"15*sinus(orientation)",
+  "speedX":"15*cosinus(orientation+0.1*((numProjs-1)/2.0-i))",
+  "speedY":"15*sinus(orientation+0.1*((numProjs-1)/2.0-i))",
   "speedZ":"0.0",
   "radius":"0.0",
   "collisionEffect":"hit"
@@ -85,6 +85,20 @@
   "startZ":"1.0",
   "speedX":"20*cosinus(orientation)",
   "speedY":"20*sinus(orientation)",
+  "speedZ":"0.0",
+  "radius":"0.0",
+  "collisionEffect":"hit"
+},
+{ 
+  "name": "charged bolt",
+  "lifeDraw": [{"particle":"charged bolt"}],
+  "finishDraw": [],
+  "duration": 4.0,
+  "startX":"0.0",
+  "startY":"0.0",
+  "startZ":"1.0",
+  "speedX":"5*cosinus(orientation+0.1*((numProjs-1)/2.0-i))",
+  "speedY":"5*sinus(orientation+0.1*((numProjs-1)/2.0-i))",
   "speedZ":"0.0",
   "radius":"0.0",
   "collisionEffect":"hit"
