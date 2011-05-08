@@ -8,7 +8,8 @@
 "stackable":true,
 "goldCost":10,
 "description":"Instantly recover 10 HP.",
-"droppable":true
+"droppable":true,
+"dropFrequency":5
 },
 {
 "name":"Stamina potion",
@@ -19,7 +20,8 @@
 "stackable":true,
 "goldCost":10,
 "description":"Instantly recover 10 SP.",
-"droppable":true
+"droppable":true,
+"dropFrequency":5
 },
 {
 "name":"Mana potion",
@@ -30,7 +32,8 @@
 "stackable":true,
 "goldCost":10,
 "description":"Instantly recover 10 MP.",
-"droppable":true
+"droppable":true,
+"dropFrequency":5
 },
 {
 "name":"Wooden 1H Sword",
@@ -45,7 +48,8 @@
 "goldCost":10,
 requirements:[{"attribute":"strength","greater":1}],
 "description":"This one handed wooden sword is mainly used for training. You could perhaps kill some rats with it.",
-"droppable":true
+"droppable":true,
+"dropFrequency":1
 },
 {
 "name":"Wooden 2H Sword",
@@ -60,7 +64,8 @@ requirements:[{"attribute":"strength","greater":1}],
 "goldCost":10,
 requirements:[{"attribute":"strength","greater":1}],
 "description":"This two handed wooden sword is mainly used for training. And because it is mainly made with wood, you can use it with one hand.",
-"droppable":true
+"droppable":true,
+"dropFrequency":1
 },
 {
 "name":"Wooden Staff",
@@ -75,7 +80,8 @@ requirements:[{"attribute":"strength","greater":1}],
 "goldCost":10,
 requirements:[{"attribute":"intelligence","greater":1}],
 "description":"This broomstick could perhaps do some damages ...",
-"droppable":true
+"droppable":true,
+"dropFrequency":2
 },
 {
 "name":"Wooden Hammer",
@@ -90,7 +96,8 @@ requirements:[{"attribute":"intelligence","greater":1}],
 "goldCost":10,
 requirements:[{"attribute":"intelligence","greater":1}],
 "description":"Mainly used to hammer nails.",
-"droppable":true
+"droppable":true,
+"dropFrequency":2
 },
 {
 "name":"Wooden Halberd",
@@ -98,14 +105,15 @@ requirements:[{"attribute":"intelligence","greater":1}],
 "modelName":"wooden-halberd",
 "type":"weapon",
 "level":1,
-"damageType":"blunt",
+"damageType":"slash",
 "damages":1.0,
 "damageRange":0.5,
 "range":0.6,
 "goldCost":10,
 requirements:[{"attribute":"intelligence","greater":1}],
 "description":"This wooden halberd is mainly used for training. And because it is mainly made with wood, you can use it with one hand.",
-"droppable":true
+"droppable":true,
+"dropFrequency":1
 },
 {
 "name":"Wooden Axe",
@@ -120,7 +128,8 @@ requirements:[{"attribute":"intelligence","greater":1}],
 "goldCost":10,
 requirements:[{"attribute":"strength","greater":1}],
 "description":"This one handed wooden axe is mainly used for training. You could perhaps kill some rats with it.",
-"droppable":true
+"droppable":true,
+"dropFrequency":1
 },
 {
 "name":"Wooden Crossbow",
@@ -128,7 +137,7 @@ requirements:[{"attribute":"strength","greater":1}],
 "modelName":"wooden-crossbow",
 "type":"weapon",
 "level":1,
-"damageType":"slash",
+"damageType":"pierce",
 "damages":1.0,
 "damageRange":0.3,
 "ranged":true,
@@ -136,7 +145,8 @@ requirements:[{"attribute":"strength","greater":1}],
 "goldCost":20,
 requirements:[{"attribute":"strength","greater":1}],
 "description":"A wooden crossbow.",
-"droppable":false
+"droppable":false,
+"dropFrequency":2
 },
 {
 "name":"Steel 1H Sword",
@@ -151,7 +161,8 @@ requirements:[{"attribute":"strength","greater":1}],
 "goldCost":30,
 requirements:[{"attribute":"strength","greater":1}],
 "description":"One handed sword.",
-"droppable":true
+"droppable":true,
+"dropFrequency":1
 },
 {
 "name":"Steel 2H Sword",
@@ -166,7 +177,8 @@ requirements:[{"attribute":"strength","greater":1}],
 "goldCost":30,
 requirements:[{"attribute":"strength","greater":1}],
 "description":"A two handed sword, but you can use it with one hand.",
-"droppable":true
+"droppable":true,
+"dropFrequency":1
 },
 {
 "name":"Steel Staff",
@@ -181,7 +193,8 @@ requirements:[{"attribute":"strength","greater":1}],
 "goldCost":30,
 requirements:[{"attribute":"intelligence","greater":1}],
 "description":"This staff can breaks knees.",
-"droppable":true
+"droppable":true,
+"dropFrequency":2
 },
 {
 "name":"Steel Hammer",
@@ -196,7 +209,8 @@ requirements:[{"attribute":"intelligence","greater":1}],
 "goldCost":30,
 requirements:[{"attribute":"intelligence","greater":1}],
 "description":"A solid hammer.",
-"droppable":true
+"droppable":true,
+"dropFrequency":1
 },
 {
 "name":"Steel Halberd",
@@ -204,14 +218,15 @@ requirements:[{"attribute":"intelligence","greater":1}],
 "modelName":"steel-halberd",
 "type":"weapon",
 "level":5,
-"damageType":"blunt",
+"damageType":"slash",
 "damages":2,
 "damageRange":0.5,
 "range":0.6,
 "goldCost":30,
 requirements:[{"attribute":"intelligence","greater":1}],
 "description":"You can use this long weapon with one hand.",
-"droppable":true
+"droppable":true,
+"dropFrequency":1
 },
 {
 "name":"Steel Axe",
@@ -226,7 +241,8 @@ requirements:[{"attribute":"intelligence","greater":1}],
 "goldCost":30,
 requirements:[{"attribute":"strength","greater":1}],
 "description":"One handed axe.",
-"droppable":true
+"droppable":true,
+"dropFrequency":1
 },
 {
 "name":"Steel Crossbow",
@@ -241,7 +257,8 @@ requirements:[{"attribute":"strength","greater":1}],
 "goldCost":20,
 requirements:[{"attribute":"strength","greater":1}],
 "description":"A steel crossbow.",
-"droppable":false
+"droppable":false,
+"dropFrequency":2
 },
 {
 "name":"Steel Mace",
@@ -256,79 +273,86 @@ requirements:[{"attribute":"strength","greater":1}],
 "goldCost":30,
 requirements:[{"attribute":"strength","greater":1}],
 "description":"A steel mace.",
-"droppable":true
+"droppable":true,
+"dropFrequency":1
 },
 {
 "name":"Leather Armor",
 "icon":"armor.png",
 "modelName":"armor",
 "type":"armor",
-"level":2,
-"resists":[],
+"level":1,
 "goldCost":10,
+"resists":{"slash":3.0,"pierce":3.0,"blunt":3.0,"fire":3.0,"air":3.0,"water":3.0,"earth":3.0},
 requirements:[{"attribute":"strength","greater":1}],
 "description":"This armor will protect your torso.",
-"droppable":true
+"droppable":true,
+"dropFrequency":3
 },
 {
 "name":"Leather Helmet",
 "icon":"helmet.png",
 "modelName":"helmet",
 "type":"helmet",
-"level":2,
-"resists":[],
+"level":1,
 "goldCost":10,
+"resists":{"slash":2.0,"pierce":2.0,"blunt":2.0,"fire":2.0,"air":2.0,"water":2.0,"earth":2.0},
 requirements:[{"attribute":"strength","greater":1}],
 "description":"A good protection for the head.",
-"droppable":true
+"droppable":true,
+"dropFrequency":3
 },
 {
 "name":"Leather Pauldrons",
 "icon":"pauldrons.png",
 "modelName":"pauldrons",
 "type":"pauldrons",
-"level":2,
-"resists":[],
+"level":1,
 "goldCost":10,
+"resists":{"slash":2.0,"pierce":2.0,"blunt":2.0,"fire":2.0,"air":2.0,"water":2.0,"earth":2.0},
 requirements:[{"attribute":"strength","greater":1}],
 "description":"Pauldrons can protect your shoulders.",
-"droppable":true
+"droppable":true,
+"dropFrequency":3
 },
 {
 "name":"Leather Pants",
 "icon":"pants.png",
 "modelName":"pants",
 "type":"pants",
-"level":2,
-"resists":[],
+"level":1,
 "goldCost":10,
+"resists":{"slash":3.0,"pierce":3.0,"blunt":3.0,"fire":3.0,"air":3.0,"water":3.0,"earth":3.0},
 requirements:[{"attribute":"strength","greater":1}],
 "description":"A good protection for knees and legs",
-"droppable":true
+"droppable":true,
+"dropFrequency":3
 },
 {
 "name":"Leather Gloves",
 "icon":"gloves.png",
 "modelName":"gauntlets",
 "type":"gloves",
-"level":2,
-"resists":[],
+"level":1,
 "goldCost":10,
+"resists":{"slash":2.0,"pierce":2.0,"blunt":2.0,"fire":2.0,"air":2.0,"water":2.0,"earth":2.0},
 requirements:[{"attribute":"strength","greater":1}],
 "description":"Protecting your hand is essential if you want to continue to use a wepaon.",
-"droppable":true
+"droppable":true,
+"dropFrequency":3
 },
 {
 "name":"Leather Boots",
 "icon":"boots.png",
 "modelName":"boots",
 "type":"boots",
-"level":2,
-"resists":[],
+"level":1,
+"resists":{"slash":2.0,"pierce":2.0,"blunt":2.0,"fire":2.0,"air":2.0,"water":2.0,"earth":2.0},
 "goldCost":10,
 requirements:[{"attribute":"strength","greater":1}],
 "description":"These boots will protect your feets.",
-"droppable":true
+"droppable":true,
+"dropFrequency":3
 },
 {
 "name":"Body Armor",
@@ -336,11 +360,12 @@ requirements:[{"attribute":"strength","greater":1}],
 "modelName":"armor",
 "type":"armor",
 "level":5,
-"resists":[],
 "goldCost":20,
+"resists":{"slash":5.0,"pierce":5.0,"blunt":5.0,"fire":1.0,"air":1.0,"water":1.0,"earth":1.0},
 requirements:[{"attribute":"strength","greater":1}],
 "description":"This armor will protect your torso.",
-"droppable":true
+"droppable":true,
+"dropFrequency":3
 },
 {
 "name":"Helmet",
@@ -348,11 +373,12 @@ requirements:[{"attribute":"strength","greater":1}],
 "modelName":"helmet",
 "type":"helmet",
 "level":5,
-"resists":[],
+"resists":{"slash":3.0,"pierce":3.0,"blunt":3.0,"fire":1.0,"air":1.0,"water":1.0,"earth":1.0},
 "goldCost":20,
 requirements:[{"attribute":"strength","greater":1}],
 "description":"A good protection for the head.",
-"droppable":true
+"droppable":true,
+"dropFrequency":3
 },
 {
 "name":"Pauldrons",
@@ -360,11 +386,12 @@ requirements:[{"attribute":"strength","greater":1}],
 "modelName":"pauldrons",
 "type":"pauldrons",
 "level":5,
-"resists":[],
+"resists":{"slash":3.0,"pierce":3.0,"blunt":3.0,"fire":1.0,"air":1.0,"water":1.0,"earth":1.0},
 "goldCost":20,
 requirements:[{"attribute":"strength","greater":1}],
 "description":"Pauldrons can protect your shoulders.",
-"droppable":true
+"droppable":true,
+"dropFrequency":3
 },
 {
 "name":"Pants",
@@ -372,11 +399,12 @@ requirements:[{"attribute":"strength","greater":1}],
 "modelName":"pants",
 "type":"pants",
 "level":5,
-"resists":[],
+"resists":{"slash":5.0,"pierce":5.0,"blunt":5.0,"fire":1.0,"air":1.0,"water":1.0,"earth":1.0},
 "goldCost":20,
 requirements:[{"attribute":"strength","greater":1}],
 "description":"A good protection for knees and legs",
-"droppable":true
+"droppable":true,
+"dropFrequency":3
 },
 {
 "name":"Gloves",
@@ -384,11 +412,12 @@ requirements:[{"attribute":"strength","greater":1}],
 "modelName":"gauntlets",
 "type":"gloves",
 "level":5,
-"resists":[],
+"resists":{"slash":3.0,"pierce":3.0,"blunt":3.0,"fire":1.0,"air":1.0,"water":1.0,"earth":1.0},
 "goldCost":20,
 requirements:[{"attribute":"strength","greater":1}],
 "description":"Protecting your hand is essential if you want to continue to use a wepaon.",
-"droppable":true
+"droppable":true,
+"dropFrequency":3
 },
 {
 "name":"Boots",
@@ -396,11 +425,12 @@ requirements:[{"attribute":"strength","greater":1}],
 "modelName":"boots",
 "type":"boots",
 "level":5,
-"resists":[],
+"resists":{"slash":3.0,"pierce":3.0,"blunt":3.0,"fire":1.0,"air":1.0,"water":1.0,"earth":1.0},
 "goldCost":20,
 requirements:[{"attribute":"strength","greater":1}],
 "description":"These boots will protect your feets.",
-"droppable":true
+"droppable":true,
+"dropFrequency":3
 },
 {
 "name":"Shield",
@@ -408,11 +438,12 @@ requirements:[{"attribute":"strength","greater":1}],
 "modelName":"shield",
 "type":"shield",
 "level":5,
-"resists":[],
+"resists":{"slash":5.0,"pierce":5.0,"blunt":5.0,"fire":1.0,"air":1.0,"water":1.0,"earth":1.0},
 "goldCost":20,
 requirements:[{"attribute":"strength","greater":1}],
 "description":"A steel shield.",
-"droppable":true
+"droppable":true,
+"dropFrequency":3
 },
 {
 "name":"Minotaur axe",

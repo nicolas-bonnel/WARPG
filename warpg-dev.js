@@ -22,12 +22,16 @@ var cosinus = Math.cos;
 var sinus = Math.sin;
 var pi = Math.PI;
 
-var melee = 1;
-var cast = 1;
-var fire = 1;
-var air = 1;
-var water = 1;
-var slash = 1;
+var xpInc = 2;
+var aptiNames = ['constitution','strength','intelligence','dexterity','melee','ranged','cast','run','block','enchant','hex','traps','stealth',
+			'slash','pierce','blunt','shield','fire','water','earth','air','light','dark','aoe','dot'];
+
+var damageNames = ['slash','pierce','blunt','fire','water','earth','air'];
+
+var equipSlots = ['weapon','shield','helmet','pauldrons','gloves','pants','boots','armor'];
+
+var melee, constitution, strength, intelligence, dexterity, melee, ranged, cast, run, block, enchant, hex, traps, stealth, slash, pierce, blunt, 		shield, fire, water, earth, air, light, dark, aoe, dot;
+var weapon;
 
 var items = {};
 var models = {};
@@ -45,6 +49,8 @@ var pMatrix = mat4.create();
 
 var mouseX;
 var mouseY;
+
+var DEBUG = true;
 
 function mvPushMatrix() {
 	var copy = mat4.create();
@@ -70,12 +76,30 @@ function degToRad(degrees) {
 }
 
 function setAptitudeVars(creature){
-	melee = creature.melee.level;
-	cast = creature.cast.level;
-	fire = creature.fire.level;
-	air = creature.air.level;
-	water = creature.water.level;
-	slash = creature.slash.level;
+	for (var i in aptiNames)
+		eval(aptiNames[i]+'=creature.'+aptiNames[i]+'.level');
+	weapon = creature.equipment['weapon'].item;
+}
+
+function minDamage(dmgList){
+	var minD = 0.0;
+	for (var i in dmgList)
+		minD += dmgList[i].value*(1-dmgList[i].range);
+	return Math.round(10*minD)/10;
+}
+
+function maxDamage(dmgList){
+	var maxD = 0.0;
+	for (var i in dmgList)
+		maxD += dmgList[i].value*(1+dmgList[i].range);
+	return Math.round(10*maxD)/10;
+}
+
+function ranDamage(dmgList){
+	var ranD = 0.0;
+	for (var i in dmgList)
+		ranD += dmgList[i].value*(1+(1.0-2.0*rand())*dmgList[i].range);
+	return ranD;
 }
 
 function randomPosInRect(w,h){
@@ -94,65 +118,9 @@ function randomPosInCircle(r){
 	return ret;
 }
 
-var DEBUG = true;
-
-function info(msg){
-	var m = document.createElement("div");
-	m.innerHTML = "[INFO] " +msg;
-	document.getElementById("console").appendChild(m);
-}
-
-function debug(msg){
-	if(DEBUG){
-		var m = document.createElement("div");
-		m.innerHTML = "[DEBUG] " +msg;
-		document.getElementById("console").appendChild(m);
-	}
-}
-
-function warning(msg){
-	var m = document.createElement("div");
-	m.innerHTML = "[WARNING] " +msg;
-	document.getElementById("console").appendChild(m);
-}
-
-function error(msg){
-	var m = document.createElement("div");
-	m.innerHTML = "[ERROR] " +msg;
-	document.getElementById("console").appendChild(m);
-}
-
-function clearConsole(){
-	console = document.getElementById("console");
-	while(console.hasChildNodes())
-		console.removeChild(console.firstChild);
-}
-
-
 function closeTab(tabName){
 	document.getElementById(tabName).style.visibility = 'hidden';
 }
-
-/*
-function dragStart(event) {
-        event.dataTransfer.effectAllowed = 'copy';
-        event.dataTransfer.setData("Text", event.target.getAttribute('id'));
-	return true;
-}
-
-function dragOver(event) {
-	if (event.preventDefault)
-		event.preventDefault(); // allows us to drop
-  	event.dataTransfer.dropEffect = 'copy';
-	return false;
-}
-
-function drop(event) {
-	var element = event.dataTransfer.getData("Text");
-	event.target.appendChild(document.getElementById(element));
-	event.stopPropagation();
-	return false;
-}*/
 
 function dist(o1,o2){
 	return Math.sqrt((o1.x-o2.x)*(o1.x-o2.x)+(o1.y-o2.y)*(o1.y-o2.y));
@@ -247,6 +215,38 @@ function loadObj (modelName,recenter){
 			}
 	}
 	reqMesh.send(null);
+}
+
+function clearConsole(){
+	console = document.getElementById("console");
+	while(console.hasChildNodes())
+		console.removeChild(console.firstChild);
+}
+
+function info(msg){
+	var m = document.createElement("div");
+	m.innerHTML = "[INFO] " +msg;
+	document.getElementById("console").appendChild(m);
+}
+
+function debug(msg){
+	if(DEBUG){
+		var m = document.createElement("div");
+		m.innerHTML = "[DEBUG] " +msg;
+		document.getElementById("console").appendChild(m);
+	}
+}
+
+function warning(msg){
+	var m = document.createElement("div");
+	m.innerHTML = "[WARNING] " +msg;
+	document.getElementById("console").appendChild(m);
+}
+
+function error(msg){
+	var m = document.createElement("div");
+	m.innerHTML = "[ERROR] " +msg;
+	document.getElementById("console").appendChild(m);
 }
 /* WebGL 3D Area class
  *
@@ -346,38 +346,21 @@ function createArea(areaName,ax,ay,level){
  *
  */
 
-var xpInc = 2;
-
 function Character(jsonFile,x,y,level){
-	this['constitution'] = new Object();
-	this['strength'] = new Object();
-	this['intelligence'] = new Object();
-	this['dexterity'] = new Object();
-	this['melee'] = new Object();
-	this['ranged'] = new Object();
-	this['cast'] = new Object();
-	this['run'] = new Object();
-	this['block'] = new Object();
-	this['enchant'] = new Object();
-	this['hex'] = new Object();
-	this['traps'] = new Object();
-	this['stealth'] = new Object();
-	this['slash'] = new Object();
-	this['pierce'] = new Object();
-	this['blunt'] = new Object();
-	this['shield'] = new Object();
-	this['fire'] = new Object();
-	this['water'] = new Object();
-	this['earth'] = new Object();
-	this['air'] = new Object();
-	this['light'] = new Object();
-	this['dark'] = new Object();
-	this['aoe'] = new Object();
-	this['dot'] = new Object();
-	for (skill in this){
-		this[skill].level = 1;
-		this[skill].xp = 0;
+	for (var i in aptiNames){
+		this[aptiNames[i]] = {};
+		this[aptiNames[i]].level = 1;
+		this[aptiNames[i]].xp = 0;
 	}
+	this.effects = [];
+	if (jsonFile.particle){
+		var eff = new ParticleEmitter(this,jsonFile.particle);
+		world.particles.push(eff);
+		this.effects.push(eff);
+	}
+	this.properties = jsonFile;
+	this.level = level;
+	this.levelXP = 10;
 	for (var i=0;i<jsonFile.aptitudes.length;i++)
 		this[jsonFile.aptitudes[i].aptitude].level = eval(jsonFile.aptitudes[i].level);
 	this.scale = eval(jsonFile.scale);
@@ -393,32 +376,40 @@ function Character(jsonFile,x,y,level){
 	this.currentMp = this.maxMp;
 	this.currentSp = this.maxSp;
 	this.faction = jsonFile.faction;
-	this.inventory = {};
-	this.equipment = {};
-	if(jsonFile.equipmentModif)
-		for (var i=0;i<jsonFile.equipmentModif.length;i++)
-			this.equipment[jsonFile.equipmentModif[i].type]= jsonFile.equipmentModif[i];
 
 	if(models[this.modelName].collision.type=='circle')
 		this.collision = new CircleCollision(this,models[this.modelName].collision.radius*this.scale);
 	else if(models[this.modelName].collision.type=='rect')
 		this.collision = new RectCollision(this,models[this.modelName].collision.collisionW*this.scale,models[this.modelName].collision.collisionH*this.scale);
-	this.baseDamages = [];
-	this.currentDamages = [];
+		
+	// damages and resists
+	this.damages = {};
+	this.resists = {};
+	for (var i in damageNames){
+		this.damages[damageNames[i]] = [];
+		this.resists[damageNames[i]] = 0.0;
+	}
 	if (jsonFile.damages){
-		for (var i=0;i<jsonFile.damages.length;i++){
+		for (var i in jsonFile.damages){
 			var dam = {};
 			dam.value = eval(jsonFile.damages[i].value);
 			dam.range = jsonFile.damages[i].range;
-			dam.type = jsonFile.damages[i].damageType;
 			dam.id = 'base';
-			this.baseDamages.push(dam);
-			this.currentDamages.push(dam);
-			//debug(this.modelName +', level '+level+', dmg : '+this.baseDamages[i].value);
+			this.damages[jsonFile.damages[i].type].push(dam);
 		}
-		this.baseRange = jsonFile.range;
-		this.currentRange = this.baseRange;
 	}
+	this.range = jsonFile.range;
+	for (var res in jsonFile.resists)
+		this.resists[res] = eval(jsonFile.resists[res]);
+
+	// inventory and equipment
+	this.inventory = {};
+	this.equipment = {};
+	for(var i in equipSlots)
+		this.equipment[equipSlots[i]] = {};
+	if(jsonFile.equipmentModif)
+		for (var i=0;i<jsonFile.equipmentModif.length;i++)
+			this.equipment[jsonFile.equipmentModif[i].type] = jsonFile.equipmentModif[i];
 	for(var i=0;i<jsonFile.gear.length;i++)
 		if(jsonFile.gear[i].weapon){
 			var it = new Item(items[jsonFile.gear[i].weapon],'normal',level);
@@ -435,11 +426,8 @@ function Character(jsonFile,x,y,level){
 				$('#rightgear div').eq(3).append(getIcon(it));
 			}
 		}
-	if (jsonFile.particle)
-		world.particles.push(new ParticleEmitter(this,jsonFile.particle));
-	this.properties = jsonFile;
-	this.level = level;
-	this.levelXP = 10;
+
+	// Actions and animation
 	this.currentAction = new Action(this,skills['idle']);
 	this.currentAction.isInterruptible = true;
 	this.nextAction = this.currentAction;
@@ -448,12 +436,22 @@ function Character(jsonFile,x,y,level){
 	this.posFrame = 0.0;
 }
 
+/*
+ Give back health, stamina, and mana. Used for potions and healing spells.
+ @ hp : amount of health restored
+ @ sp : amount of stamina restored
+ @ mp : amount of mana restored
+*/
 Character.prototype.recover = function(hp,sp,mp){
 	this.currentHp = Math.min(this.currentHp+hp,this.maxHp);
 	this.currentSp = Math.min(this.currentSp+sp,this.maxSp);
 	this.currentMp = Math.min(this.currentMp+mp,this.maxMp);
 }
 
+/*
+ Update this character status according to elapsed time. Regenerate, move, process ai and effects.
+ @ elapsed : amount of time elapsed in seconds since last update.
+*/
 Character.prototype.update = function(elapsed){
 	if (this.currentHp<this.maxHp && this.currentHp>0.0){
 		var inc = (this.constitution.level+4)*(elapsed/25.0);
@@ -480,8 +478,7 @@ Character.prototype.update = function(elapsed){
 			this.collision = null;
 		this.circleHealth = null;
 	}
-	var h =  world.getH(this.x,this.y);
-	this.z += (h-this.z)/4.0;
+	this.z =  world.getH(this.x,this.y);
 	if(this.ai)
 		this.ai.process();
 	if (this.currentAction.type.substring(0,4)=='walk')
@@ -491,6 +488,9 @@ Character.prototype.update = function(elapsed){
 			this.currentAction.lifeEffects[i].process(elapsed);
 }
 
+/*
+ Draw this character and its child elements (items, health)
+*/
 Character.prototype.draw = function (){
 	mvPushMatrix();
 	mat4.translate(mvMatrix,[this.x, this.y,this.z]);
@@ -500,10 +500,9 @@ Character.prototype.draw = function (){
 		mat4.rotate(mvMatrix, degToRad(this.orient), [0, 0, 1]);
 	if(this.scale)
 		mat4.scale(mvMatrix,[this.scale,this.scale,this.scale]);
-	// TODO Childs collection
-	for (equip in this.equipment)
-		if (this.equipment[equip].bone && this.equipment[equip].item)
-			this.equipment[equip].item.draw();
+	for (var i in this.equipment)
+		if (this.equipment[i].bone && this.equipment[i].item)
+			this.equipment[i].item.draw();
 	if(this.circleHealth)
 		this.circleHealth.draw();
 	if(this.mesh)
@@ -513,78 +512,94 @@ Character.prototype.draw = function (){
 	mvPopMatrix();	
 }
 
-
-Character.prototype.xpAptitude=function(skill,xp){
+/*
+ Give experience to aptitudes used by the player.
+ @ apti : the name of the aptitude to give exterience to
+ @ xp : the amount of experience to give
+*/
+Character.prototype.xpAptitude=function(apti,xp){
 	if(this == world.player){
-		this[skill].xp += xp;
-		if(this[skill].xp>=this.levelXP){
-			this[skill].xp -= this.levelXP;
-			this[skill].level += 1;
+		this[apti].xp += xp;
+		if(this[apti].xp>=this.levelXP){
+			this[apti].xp -= this.levelXP;
+			this[apti].level += 1;
 			this.levelXP += xpInc;
 			this.level += 0.1;
-			document.getElementById(skill+'LVL').innerHTML = this[skill].level;
+			document.getElementById(apti+'LVL').innerHTML = this[apti].level;
 			document.getElementById('playerLevel').innerHTML = Math.floor(this.level);
 			document.getElementById('playerLevelXP').innerHTML = this.levelXP;
-			if(skill=='constitution')
+			if(apti=='constitution')
 				this.maxHp += 2;
-			else if (skill=='strength')
+			else if (apti=='strength')
 				this.maxSp += 2;
-			else if (skill=='intelligence')
+			else if (apti=='intelligence')
 				this.maxMp += 2;
 		}
-		document.getElementById(skill+'XP').innerHTML = Math.floor(this[skill].xp);
+		document.getElementById(apti+'XP').innerHTML = Math.floor(this[apti].xp);
 	}
 }
 
+/*
+ Damage this character. If the character takes more than 10% of its maximum amount of health points, it enters in recovery mode (cancels current action).
+ @ dmgs : an array of damage objects (value, type)
+*/
 Character.prototype.damage = function(dmgs){
 	var damages = 0.0;
 	for (var j=0;j<dmgs.length;j++){
-		damages += dmgs[j].value;
+		damages += dmgs[j].value*(1-this.resists[dmgs[j].type]/100.0);
 	}
 	this.currentHp -= damages;
-	this.currentAction.isInterruptible = true;
 	if(this.currentHp<=0.0){
 		world.events.push(['dead',this]);
 		this.currentHp = 0;
+		this.currentAction.isInterruptible = true;
 		this.setAction(skills['die']);
-		if(this != world.player)
+		if(this != world.player){
 			this.collision = null;
-		this.circleHealth = null;
-	}else
+			this.circleHealth = null;
+			for (var i in this.effects)
+				this.effects[i].finalize();
+		}
+	}else if (damages>this.maxHp/10.0){
+		this.currentAction.isInterruptible = true;
 		this.setAction(skills['hit']);
+	}
 	world.particles.push(new ParticleEmitter(this,'blood'));
 	createNumber(this,Math.floor(damages));
 }
 
 
 Character.prototype.addEquipment = function(item){
-	if (!this.equipment[item.type])
-		this.equipment[item.type] = {};
-	else if(this.equipment[item.type].item)
+	if(this.equipment[item.type].item)
 		this.removeEquipment(item.type);
 	this.equipment[item.type].item = item;
 	item.parentModif = this.equipment[item.type];
 	if(item.type=='weapon'){
-		for(var i=0;i<this.currentDamages.length;i++)
-			if(this.currentDamages[i].id == 'base') {
-				this.currentDamages.splice(i, 1);
-			}
 		var dam = {};
 		dam.value = item.damages;
 		dam.range = item.damageRange;
-		dam.type = item.damageType;
 		dam.id = item.id;
-		this.currentDamages.push(dam);
-		this.currentRange = item.range;
+		this.damages[item.damageType].push(dam);
+		this.range = item.range;
+		if (this == world.player)
+			$('#'+item.damageType+'Dmg').html(minDamage(this.damages[item.damageType])+' - '+maxDamage(this.damages[item.damageType]));
 	}
+	if(item.resists)
+		for (var x in item.resists){
+			this.resists[x] += item.resists[x];
+			if (this == world.player)
+				$('#'+x+'Res').html(this.resists[x]+' %');
+		}
 	for (var x in item.powers){
 		if (item.powers[x].effect.type == 'damage'){
+			var type = item.powers[x].effect.damageType;
 			var dam = {};
 			dam.value = item.powers[x].effect.value;
 			dam.range = 0;
 			dam.id = item.id;
-			dam.type =  item.powers[x].effect.damageType;
-			this.currentDamages.push(dam);
+			this.damages[type].push(dam);
+			if (this == world.player)
+				$('#'+type+'Dmg').html(minDamage(this.damages[type])+' - '+maxDamage(this.damages[type]));
 		}else if (item.powers[x].effect.type == 'bonus'){
 			if (item.powers[x].effect.aptitude == 'hp')
 				this.maxHp += item.powers[x].effect.value;
@@ -600,11 +615,14 @@ Character.prototype.removeEquipment = function(type){
 	var item = this.equipment[type].item;
 	for (var x in item.powers){
 		if (item.powers[x].effect.type == 'damage'){
-			for(var i=0;i<this.currentDamages.length;i++)
-				if(this.currentDamages[i].id == item.id) {
-					this.currentDamages.splice(i, 1);
+			var typeD = item.powers[x].effect.damageType;
+			for(var i in this.damages[typeD])
+				if(this.damages[typeD][i].id == item.id) {
+					this.damages[typeD].splice(i, 1);
 					break;
 				}
+			if (this == world.player)
+				$('#'+typeD+'Dmg').html(minDamage(this.damages[typeD])+' - '+maxDamage(this.damages[typeD]));
 		}else if (item.powers[x].effect.type == 'bonus'){
 			if (item.powers[x].effect.aptitude == 'hp'){
 				this.maxHp -= item.powers[x].effect.value;
@@ -620,25 +638,34 @@ Character.prototype.removeEquipment = function(type){
 	}
 	this.equipment[type].item = null;
 	if(type=='weapon'){
-		for(var i=0;i<this.currentDamages.length;i++)
-			if(this.currentDamages[i].id == item.id) {
-				this.currentDamages.splice(i, 1);
+		for(var i in this.damages[item.damageType])
+			if(this.damages[item.damageType][i].id == item.id) {
+				this.damages[item.damageType].splice(i, 1);
 			}
-		for(var i=0;i<this.baseDamages.length;i++)
-			this.currentDamages.push(this.baseDamages[i]);
-		this.currentRange = this.baseRange;
+		if (this == world.player)
+			$('#'+item.damageType+'Dmg').html(minDamage(this.damages[item.damageType])+' - '+maxDamage(this.damages[item.damageType]));
+		this.range = this.properties.range;
 	}
+	if(item.resists)
+		for (var x in item.resists){
+			this.resists[x] -= item.resists[x];
+			if (this == world.player)
+				$('#'+x+'Res').html(this.resists[x]+' %');
+		}
 }
 
 
 Character.prototype.setAction = function(skill){
 	if(this.nextAction.type != skill.action && this.nextAction.type != 'die' && this.nextAction.type != 'opened' && this.nextAction.type != 'disapear' && this.nextAction.type != 'hit'){
 		setAptitudeVars(this);
+		if(this != world.player || !skill.requirement || eval(skill.requirement)){
 		//debug(this.nextAction.type+','+skill.action);
-		if(eval(skill.cost[1])<=this.currentSp && eval(skill.cost[2])<=this.currentMp)		
-			this.nextAction = new Action(this,skill);
-		if(this.nextAction.type=='idle' || this.nextAction.type== 'walkF'|| this.nextAction.type== 'walkB')
-			this.nextAction.isInterruptible = true;
+			if(eval(skill.cost[1])<=this.currentSp && eval(skill.cost[2])<=this.currentMp)		
+				this.nextAction = new Action(this,skill);
+			if(this.nextAction.type=='idle' || this.nextAction.type== 'walkF'|| this.nextAction.type== 'walkB')
+				this.nextAction.isInterruptible = true;
+		}else
+			debug('Cannot use skill : '+skill.name);
 	}
 }
 
@@ -724,13 +751,15 @@ Character.prototype.animate = function(elapsed){
 				}
 			}else if(this.currentAction.type =='open'){
 				this.nextAction = new Action(this,skills['opened']);
-				var drop = loot(this.level+1,rand()/5.0);
-				//debug(this.level+1);
-				var theta = (models[this.modelName].orient+this.orient)*Math.PI/180.0;
-				drop.x = this.x+Math.sin(theta);
-				drop.y = this.y-Math.cos(theta);
-				drop.z = this.z;
-				world.addObj(drop);
+				for (var i=0;i<10;i++){
+					var drop = loot(this.level+1,rand()/5.0);
+					//debug(this.level+1);
+					var theta = (models[this.modelName].orient+this.orient)*Math.PI/180.0;
+					drop.x = this.x+Math.sin(theta);
+					drop.y = this.y-Math.cos(theta);
+					drop.z = this.z;
+					world.addObj(drop);
+				}
 			}
 			else if (this.currentAction.type =='hit'){
 				this.nextAction = new Action(this,skills['idle']);
@@ -939,22 +968,20 @@ function MeleeHit(parent,skill,finishEffects){
 	this.finishEffects = finishEffects;
 	this.skill = skill;
 	this.damages = [];
-	for (var i=0;i<parent.currentDamages.length;i++){
-		var dam = new Object();
-		dam.type = parent.currentDamages[i].type;
-		dam.value = parent.currentDamages[i].value*eval(skill.damagesModifier);
-		dam.value = dam.value + dam.value*(1.0-2.0*rand())*eval(parent.currentDamages[i].range);
-		this.damages.push(dam);
-	}
 	setAptitudeVars(parent);
 	if(skill.damages)
-		for (var i=0;i<skill.damages.length;i++){
+		for (var type in skill.damages){
 			var dam = new Object();
-			dam.type = skill.damages[i].type;
-			dam.value = eval(skill.damages[i].value);
-			dam.value = dam.value + dam.value*(1.0-2.0*rand())*eval(skill.damages[i].range);
+			dam.type = type;
+			dam.value = eval(skill.damages[type].value)*(1+(1-2*rand())*skill.damages[type].range);
 			this.damages.push(dam);
 		}
+	for (var type in skill.damagesModifier){
+		var dam = new Object();
+		dam.type = type;
+		dam.value = ranDamage(parent.damages[type])*eval(skill.damagesModifier[type]);	
+		this.damages.push(dam);
+	}
 }
 
 //TODO update damages
@@ -968,8 +995,7 @@ MeleeHit.prototype.process=function(elapsed){
 		var range = this.parent.collision.radius*1.2;
 	else
 		var range = 1.0;
-	range += this.parent.currentRange;
-	var melee = this.parent.melee.level;
+	range += this.parent.range;
 	var cx = this.parent.x+Math.sin(theta)*range;
 	var cy = this.parent.y-Math.cos(theta)*range;
 	var objsHit = this.parent.getCollisions(cx,cy);
@@ -994,13 +1020,18 @@ function LineHit(parent,projectile,skill){
 	this.skill = skill;
 	this.damages = [];
 	setAptitudeVars(parent);
-	for (var i=0;i<skill.damages.length;i++){
+	if(skill.damages)
+		for (var type in skill.damages){
+			var dam = new Object();
+			dam.type = type;
+			dam.value = eval(skill.damages[type].value)*(1+(1-2*rand())*skill.damages[type].range);
+			this.damages.push(dam);
+		}
+	for (var type in skill.damagesModifier){
 		var dam = new Object();
-		dam.type = skill.damages[i].type;
-		dam.value = eval(skill.damages[i].value);
-		if (skill.damages[i].range)
-			dam.value = dam.value + dam.value*(1.0-2.0*rand())*eval(skill.damages[i].range);	
-		this.damages.push(dam)
+		dam.type = type;
+		dam.value = ranDamage(parent.damages[type])*eval(skill.damagesModifier[type]);	
+		this.damages.push(dam);
 	}
 }
 
@@ -1030,13 +1061,18 @@ function ProjectileHit(parent,projectile,skill){
 	this.skill = skill;
 	this.damages = [];
 	setAptitudeVars(parent);
-	for (var i=0;i<skill.damages.length;i++){
+	if(skill.damages)
+		for (var type in skill.damages){
+			var dam = new Object();
+			dam.type = type;
+			dam.value = eval(skill.damages[type].value)*(1+(1-2*rand())*skill.damages[type].range);
+			this.damages.push(dam);
+		}
+	for (var type in skill.damagesModifier){
 		var dam = new Object();
-		dam.type = skill.damages[i].type;
-		dam.value = eval(skill.damages[i].value);
-		if (skill.damages[i].range)
-			dam.value = dam.value + dam.value*(1.0-2.0*rand())*eval(skill.damages[i].range);	
-		this.damages.push(dam)
+		dam.type = type;
+		dam.value = ranDamage(parent.damages[type])*eval(skill.damagesModifier[type]);	
+		this.damages.push(dam);
 	}
 }
 
@@ -1045,9 +1081,9 @@ ProjectileHit.prototype.process=function(elapsed){
 	for (var i=0;i<objsHit.length;i++){
 		if (this.skill.target == 'ennemy' && objsHit[i].faction && objsHit[i].faction != this.parent.faction && objsHit[i].currentHp>0){
 			objsHit[i].damage(this.damages);
-			this.projectile.dead = true;
+			this.projectile.dead = !this.projectile.loop;
 		}else if (objsHit[i] != this.parent)
-			this.projectile.dead = true;
+			this.projectile.dead = !this.projectile.loop;
 	}
 }
 
@@ -1058,13 +1094,18 @@ function Nova(parent,projectile,skill){
 	this.damages = [];
 	setAptitudeVars(parent);
 	this.lifeTime = 0.0;
-	for (var i=0;i<skill.damages.length;i++){
+	if(skill.damages)
+		for (var type in skill.damages){
+			var dam = new Object();
+			dam.type = type;
+			dam.value = eval(skill.damages[type].value)*(1+(1-2*rand())*skill.damages[type].range);
+			this.damages.push(dam);
+		}
+	for (var type in skill.damagesModifier){
 		var dam = new Object();
-		dam.type = skill.damages[i].type;
-		dam.value = eval(skill.damages[i].value);
-		if (skill.damages[i].range)
-			dam.value = dam.value + dam.value*(1.0-2.0*rand())*eval(skill.damages[i].range);	
-		this.damages.push(dam)
+		dam.type = type;
+		dam.value = ranDamage(parent.damages[type])*eval(skill.damagesModifier[type]);	
+		this.damages.push(dam);
 	}
 	this.objsHit = [];
 }
@@ -1088,13 +1129,18 @@ function RandomHit(parent,projectile,skill,finishEffects){
 	this.skill = skill;
 	this.damages = [];
 	setAptitudeVars(parent);
-	for (var i=0;i<skill.damages.length;i++){
+	if(skill.damages)
+		for (var type in skill.damages){
+			var dam = new Object();
+			dam.type = type;
+			dam.value = eval(skill.damages[type].value)*(1+(1-2*rand())*skill.damages[type].range);
+			this.damages.push(dam);
+		}
+	for (var type in skill.damagesModifier){
 		var dam = new Object();
-		dam.type = skill.damages[i].type;
-		dam.value = eval(skill.damages[i].value);
-		if (skill.damages[i].range)
-			dam.value = dam.value + dam.value*(1.0-2.0*rand())*eval(skill.damages[i].range);	
-		this.damages.push(dam)
+		dam.type = type;
+		dam.value = ranDamage(parent.damages[type])*eval(skill.damagesModifier[type]);	
+		this.damages.push(dam);
 	}
 }
 
@@ -1244,7 +1290,7 @@ AI.prototype.process = function(){
 			}else{
 				this.parent.speed = 0;
 				if(world.player.currentHp>0)
-					this.parent.setAction(skills['Melee attack']);
+					this.parent.setAction(skills[this.parent.properties.skills[0]]); // random here ?
 				else
 					this.parent.setAction(skills['idle']);
 			}
@@ -1291,6 +1337,8 @@ function Item(jsonItem,quality,itemLevel){
 	item.name = jsonItem.name;
 	item.type = jsonItem.type;
 	item.requirements = jsonItem.requirements;
+	if(jsonItem.resists)
+		item.resists = jsonItem.resists;
 	if(item.type=='weapon'){
 		item.damageType = jsonItem.damageType;
 		item.damages = jsonItem.damages;
@@ -1305,7 +1353,7 @@ function Item(jsonItem,quality,itemLevel){
 		item.goldCost = 0;
 	if(jsonItem.stackable)
 		item.stackable = jsonItem.stackable;
-	item.id = item.name+(new Date().getTime());
+	item.id = rand()+item.name+rand();
 	if(item.type == 'consumable'){
 		item.quality = 'normal';
 	}else{
@@ -1384,6 +1432,12 @@ function itemDescription(item){
 		else if (item.powers[x].effect.type == 'bonus')
 			descrip += item.powers[x].effect.aptitude+'<br>';
 	}
+	if(item.resists){
+		descrip += 'Resists : ';
+		for (var x in item.resists)
+			descrip += x+' : '+item.resists[x]+' %, ';
+		descrip = descrip.substring(0,descrip.length-2)+'<br>';
+	}
 	if (item.goldCost>0)
 		descrip += '<font color="#EEEEAA">Price: '+item.goldCost+' gold.</font>';
 	descrip += '</div>';
@@ -1405,7 +1459,7 @@ function loot(level,qual){
 	else
 		quality = 'normal';
 	var it = new Item(items[itemNames[Math.floor(rand()*itemNames.length)]],quality,level);
-	it.pickable = new ParticleEmiter(it,'itemdrop');
+	it.pickable = new ParticleEmitter(it,'itemdrop');
 	world.particles.push(it.pickable);
 	return it;
 }
@@ -2427,10 +2481,10 @@ function Projectile(parent,projectiles,skill,i){
 		this.damageInterval = -1;
 	for (var i=0;i<projectiles.lifeDraw.length;i++)
 		if(projectiles.lifeDraw[i].particle) 
-			this.lifeDraw.push(new ParticleEmiter(this,projectiles.lifeDraw[i].particle));
+			this.lifeDraw.push(new ParticleEmitter(this,projectiles.lifeDraw[i].particle));
 	for (var i=0;i<projectiles.finishDraw.length;i++)
 		if(projectiles.finishDraw[i].particle) 
-			this.finishDraw.push(new ParticleEmiter(this,projectiles.finishDraw[i].particle));
+			this.finishDraw.push(new ParticleEmitter(this,projectiles.finishDraw[i].particle));
 	if (projectiles.collisionEffect == 'hit')
 		this.collisionEffect = new ProjectileHit(parent.parent,this,skill);
 	else if (projectiles.collisionEffect == 'line')
@@ -2779,7 +2833,7 @@ keyMap['strafeRight'] = 82; // r
 keyMap['backward'] = 68; // d
 keyMap['turnLeft'] = 83; // s
 keyMap['turnRight'] = 70; // f
-keyMap['skill'] = 84; // t
+keyMap['attack'] = 84; // t
 
 function initGL(canvas) {
 	try {
@@ -2872,8 +2926,15 @@ function handleKeys() {
 	else if (currentlyPressedKeys[keyMap['turnRight']])
      		world.player.orient -=90*elapsed;
 
-	if (currentlyPressedKeys[keyMap['skill']])
-  		world.player.setAction(skills['Melee attack']);//attack
+	if (currentlyPressedKeys[keyMap['attack']])
+		if (!world.player.equipment['weapon'].item)
+			world.player.setAction(skills['Punch']);//attack
+		else if (world.player.equipment['weapon'].item.damageType=='slash')
+			world.player.setAction(skills['Slashing attack']);//attack
+		else if (world.player.equipment['weapon'].item.damageType=='pierce')
+			world.player.setAction(skills['Piercing attack']);//attack
+		else if (world.player.equipment['weapon'].item.damageType=='blunt')
+			world.player.setAction(skills['Blunt attack']);//attack
 
 	if (currentlyPressedKeys[keyMap['aptitude']])
   		showTab('aptitude');
@@ -3375,21 +3436,33 @@ function skillDescription(sk){
 		descrip += ' <font color="#FFFF77">'+eval(skills[sk].cost[1])+' SP</font>';
 	if(eval(skills[sk].cost[2])>0)
 		descrip += ' <font color="#7777FF">'+eval(skills[sk].cost[2])+' MP</font>';
-	var minDmg = 0.0;
-	var maxDmg = 0.0;
-	for (var i=0;i<world.player.currentDamages.length;i++){
-		var dam = world.player.currentDamages[i].value*eval(skills[sk].damagesModifier);
-		minDmg += dam - dam*eval(world.player.currentDamages[i].range);
-		maxDmg += dam + dam*eval(world.player.currentDamages[i].range);
-	}
-	if (skills[sk].damages)
-		for (var i=0;i<skills[sk].damages.length;i++){
-			var dam = eval(skills[sk].damages[i].value);
-			minDmg += dam - dam*eval(skills[sk].damages[i].range);
-			maxDmg += dam + dam*eval(skills[sk].damages[i].range);
+	if ((!skills[sk].requirement || eval(skills[sk].requirement) )&& (skills[sk].damages || skills[sk].damagesModifier)){
+		descrip += '<br>Damages :<br>';
+		var damages = {};
+		if(skills[sk].damages)
+			for (var type in skills[sk].damages){
+				var dam = new Object();
+				dam.minValue = eval(skills[sk].damages[type].value)*(1-skills[sk].damages[type].range);
+				dam.maxValue = eval(skills[sk].damages[type].value)*(1+skills[sk].damages[type].range);
+				damages[type] = dam;
+			}
+		for (var type in skills[sk].damagesModifier){
+			if (damages[type] == null){
+				damages[type] = new Object();
+				damages[type].minValue = 0;
+				damages[type].maxValue = 0;
+			}
+			var dam = damages[type];
+			dam.minValue += minDamage(world.player.damages[type])*eval(skills[sk].damagesModifier[type]);
+			dam.maxValue += maxDamage(world.player.damages[type])*eval(skills[sk].damagesModifier[type]);	
 		}
-	if (minDmg>0)
-		descrip += ' Damages: '+Math.round(minDmg*100)/100+'-'+Math.round(maxDmg*100)/100;
+		for (type in damages)
+			if(damages[type].minValue>0)
+				descrip += type+' : '+Math.round(damages[type].minValue*10)/10+' - '+Math.round(damages[type].maxValue*10)/10+'<br>';
+	}
+
+	//if (minDmg>0)
+		//descrip += ' Damages: '+Math.round(minDmg*100)/100+'-'+Math.round(maxDmg*100)/100;
 	descrip += '</div>';
 	return descrip;
 }
@@ -3750,9 +3823,9 @@ World.prototype.draw = function(elapsed){
 		elapsed = 0;
 	if (this.player){
 		if(this.player.currentHp>=0){
-			document.getElementById("hp").innerHTML = 'HP : '+Math.ceil(10*this.player.currentHp)/10+'/'+this.player.maxHp;
-			document.getElementById("sp").innerHTML = 'SP : '+Math.floor(10*this.player.currentSp)/10+'/'+this.player.maxSp;
-			document.getElementById("mp").innerHTML = 'MP : '+Math.floor(10*this.player.currentMp)/10+'/'+this.player.maxMp;
+			$('#hp').html('HP : '+Math.ceil(10*this.player.currentHp)/10+'/'+Math.round(10*this.player.maxHp)/10);
+			$('#sp').html('SP : '+Math.floor(10*this.player.currentSp)/10+'/'+Math.round(10*this.player.maxSp)/10);
+			$('#mp').html('MP : '+Math.floor(10*this.player.currentMp)/10+'/'+Math.round(10*this.player.maxMp)/10);
 			document.getElementById("imHp").width = (150*this.player.currentHp/this.player.maxHp);
 			document.getElementById("imSp").width = (150*this.player.currentSp/this.player.maxSp);
 			document.getElementById("imMp").width = (150*this.player.currentMp/this.player.maxMp);

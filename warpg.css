@@ -98,10 +98,10 @@ padding: 3px;
 #inventoryTab{
 display:block;
 position: absolute;
-top: 100px;
-left: 10px;
-width:600px;
-height:320px;
+top: 10px;
+left: 150px;
+width:485px;
+height:450px;
 background-color: rgba(0,0,0,0.5);
 border-radius: 10px;
 padding: 3px;
@@ -119,12 +119,6 @@ border-radius: 10px;
 padding: 3px;
 }
 
-
-#inventoryTable td div{
-position:relative;
-left:4px;
-}
-
 #leftgear{
 display:block;
 position: absolute;
@@ -134,7 +128,7 @@ left: 3px;
 
 #leftgear div{
 padding:0px;
-margin-top:10px;
+margin-top:0px;
 text-align:center;
 background-image: url(data/text/skillSlot.png);
 width:40px;
@@ -151,12 +145,12 @@ top:4px;
 display:block;
 position: absolute;
 top: 3px;
-left: 205px;
+left: 180px;
 }
 
 #rightgear div{
 padding:0px;
-margin-top:10px;
+margin-top:0px;
 text-align:center;
 background-image: url(data/text/skillSlot.png);
 width:40px;
@@ -167,13 +161,6 @@ height:40px;
 position:relative;
 left:4px;
 top:4px;
-}
-
-#inventoryTab img{
-display:block;
-position: absolute;
-top: 0px;
-left: 40px;
 }
 
 #inventoryTab img{
@@ -197,14 +184,22 @@ top: -20px;
 left: 0px;
 }
 
+#statsTable{
+display:block;
+position: absolute;
+top: 5px;
+left: 240px;
+width:240px;
+}
+
 #inventoryTable{
 display:block;
 position: absolute;
-top: 43px;
-left: 320px;
+top: 290px;
+left: 3px;
 }
 
-#inventoryTab td{
+#inventoryTable td{
 padding:0px;
 text-align:center;
 background-image: url(data/text/skillSlot.png);
@@ -212,24 +207,31 @@ width:40px;
 height:40px;
 }
 
+#inventoryTable td div{
+position:relative;
+left:4px;
+}
+
 #inventoryTitle{
 position: absolute;
-left: 330px;
+left: 20px;
+top:255px;
 font-size:24px;
 color:#FFFFAA
 }
 
 #gold{
 position: absolute;
-left:460px;
-top:10px;
+left:160px;
+top:260px;
 font-size:20px;
 color:#AAFFAA
 }
 
 #trash{
 position: absolute;
-left: 550px;
+left: 260px;
+top:250px;
 }
 
 #skillTab{
@@ -280,11 +282,6 @@ padding: 0px;
 background-color: rgba(0,0,0,0.0);
 color: white;
 border:none;
-}
-
-#aptitudeTab form{
-margin-top:0;
-margin-bottom:0;
 }
 
 #pauseTab{

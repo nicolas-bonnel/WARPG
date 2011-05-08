@@ -330,15 +330,22 @@ Drag your items here to sell them.
 <div></div>
 </div>
 </div>
+<table id="statsTable">
+<tr><td></td><td>Damages</td><td>Resists</td></tr>
+<tr><td>Slash</td><td id="slashDmg">0 - 0</td><td id="slashRes">0 %</td></tr>
+<tr><td>Pierce</td><td id="pierceDmg">0 - 0</td><td id="pierceRes">0 %</td></tr>
+<tr><td>Blunt</td><td id="bluntDmg">0 - 0</td><td id="bluntRes">0 %</td></tr>
+<tr><td>Fire</td><td id="fireDmg">0 - 0</td><td id="fireRes">0 %</td></tr>
+<tr><td>Air</td><td id="airDmg">0 - 0</td><td id="airRes">0 %</td></tr>
+<tr><td>Water</td><td id="waterDmg">0 - 0</td><td id="waterRes">0 %</td></tr>
+<tr><td>Earth</td><td id="earthDmg">0 - 0</td><td id="earthRes">0 %</td></tr>
+</table>
 <div id="inventoryTitle">Inventory</div><div id="gold">0 gold</div><div id="trash" style="width:32;height:32;background-image:url(data/icons/trash.png)"></div>
 <table id="inventoryTable">
-<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
 </table>
 </div>
 
@@ -373,10 +380,11 @@ GAME PAUSED
 
 </div>
 <div id="rightTab">
-<h2>WebGL RPG / Hack & Slash</h2> 
-This demo has only been tested with chrome 10 and firefox 4.0. It may work with older versions of chrome, and some features do not work with firefox 4.0 (skill drag & drop). You will probably need to download a beta of a recent browser to see this demo: <a href="http://khronos.org/webgl/wiki/Getting_a_WebGL_Implementation">getting a WebGL Implementation.</a> If you need information about this demo, you can contact me : nicolas dot bonnel at gmail dot com. The code is licenced under GNU GPL 3. Feel free to reuse the code, credits would be appreciated.<br> 
-<br> 
-To use various skills, open the aptitude tab ('L' shortcut), click either on 'cast' or 'melee', and drag & drop skills on the shortcut bar. At the start you will only have 2 skills available : melee attack (melee) and magic projectile (cast). When you use a skill, you level up aptitudes this skill is linked to. When you gain levels in aptitudes, you will have new skills available ! See the complete skill list <a href="https://github.com/nicolas-bonnel/WARPG/wiki/Skills">here.</a> 
+<h2>WebGL RPG / Hack & Slash</h2>
+This demo has only been tested with chrome 10 and firefox 4.0. It may work with older versions of chrome, and some features do not work with firefox 4.0 (skill drag & drop). You will probably need to download a beta of a recent browser to see this demo: <a href="http://khronos.org/webgl/wiki/Getting_a_WebGL_Implementation">getting a WebGL Implementation.</a> If you need information about this demo, you can contact me : nicolas dot bonnel at gmail dot com. The code is licenced under GNU GPL 3. Feel free to reuse the code, credits would be appreciated.<br>
+<br>
+To use various skills, open the aptitude tab ('L' shortcut), click either on 'cast' or 'melee', and drag & drop skills on the shortcut bar. At the start you will only have 2 skills available : melee attack (melee) and magic projectile (cast). When you use a skill, you level up aptitudes this skill is linked to. When you gain levels in aptitudes, you will have new skills available ! See the complete skill list <a href="https://github.com/nicolas-bonnel/WARPG/wiki/Skills">here.</a>
+
 <br>
 <h3>Controls</h3>
 For the moment, controls are hardcoded. No WASD because I use a french keyboard layout :).
@@ -413,7 +421,8 @@ All the models come from opengameart.org, great site !<br>
 <script type="text/javascript"> 
 var pkBaseURL = (("https:" == document.location.protocol) ? "https://djity.net/piwik/" : "http://djity.net/piwik/");
 document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
-</script><script type="text/javascript"> 
+</script>
+<script type="text/javascript"> 
 try {
 var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 4);
 piwikTracker.trackPageView();
